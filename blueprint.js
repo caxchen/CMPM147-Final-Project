@@ -62,9 +62,30 @@ class Blueprint {
             noiseSeed2 += noiseRate;
         }
         this.yVertices.sort( (a,b)=>a-b );
+        this.spaceOutYs();
         //console.log("noiseRate: ", noiseRate);
         //console.log("xVertices: ", this.xVertices);
         //console.log("yVertices: ", this.yVertices);
+    }
+
+    spaceOutYs() {
+
+        let constant = height/20;
+        let changedSomething = true;
+        while (changedSomething) {
+            changedSomething = false;
+            for (let i=1; i<this.yVertices.length; i++) {
+                if ((this.yVertices[i] - this.yVertices[i-1]) < constant) {
+                    this.yVertices[i] += constant;
+                    changedSomething = true;
+                }
+            }
+            if (this.yVertices[this.yVertices.length-1] > height) {
+                this.yVertices.pop();
+                this.xVertices.pop();
+                changedSomething = true;
+            }
+        }
     }
 
 }
