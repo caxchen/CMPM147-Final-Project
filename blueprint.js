@@ -16,10 +16,12 @@ class Blueprint {
     */
 
     generate() {
+        this.xVertices = [];
+        this.yVertices = [];
         let randomBody = Math.random();
         if (randomBody < 0.5) {
             console.log("generating fighter");
-            this.generateBody(2, 5, 10); //fighter pattern
+            this.generateBody(3, 5, 10); //fighter pattern
         }
         else if (randomBody >= 0.5) {
             console.log("generating cruiser");
@@ -32,7 +34,15 @@ class Blueprint {
     }
 
     render() {
-
+        translate(width/2, 0);
+        beginShape();
+        for (let i=0; i<this.xVertices.length; i++) {
+            vertex(this.xVertices[i], this.yVertices[i]);
+        }
+        for (let j=this.xVertices.length-1; j>=0; j--) {
+            vertex(-this.xVertices[j], this.yVertices[j]);
+        }
+        endShape(CLOSE);
     }
 
 
@@ -40,8 +50,11 @@ class Blueprint {
         let vertexCount = floor(Math.random()*10);
         while (vertexCount < minVertices || vertexCount > maxVertices) vertexCount = floor(Math.random()*10);
 
+
         let noiseSeed1 = Math.random();
         let noiseSeed2 = Math.random();
+        this.xVertices.push(noise(noiseSeed1)*width/5);
+        this.yVertices.push(noise(noiseSeed2)*height);
         for (let i=0; i<vertexCount; i++) {
             this.xVertices.push( noise(noiseSeed1)*(width/2) );
             this.yVertices.push( noise(noiseSeed2)*height );
@@ -49,9 +62,9 @@ class Blueprint {
             noiseSeed2 += noiseRate;
         }
         this.yVertices.sort( (a,b)=>a-b );
-        console.log("noiseRate: ", noiseRate);
-        console.log("xVertices: ", this.xVertices);
-        console.log("yVertices: ", this.yVertices);
+        //console.log("noiseRate: ", noiseRate);
+        //console.log("xVertices: ", this.xVertices);
+        //console.log("yVertices: ", this.yVertices);
     }
 
 }
