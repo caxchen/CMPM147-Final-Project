@@ -11,12 +11,6 @@ class Blueprint {
         this.bodyPattern;
     }
 
-    /*
-    let array1 = [1, 30, 4, 21, 100000];
-    array1.sort((a, b) => { if (a<b) return -1;else return 1; });
-    console.log(array1);
-    */
-
     generate() {
         this.xVertices = [];
         this.yVertices = [];
@@ -24,14 +18,16 @@ class Blueprint {
         if (randomBody < 0.5) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
+            this.bodyPattern = "fighter";
         }
         else if (randomBody >= 0.5) {
             console.log("generating cruiser");
-            this.generateBody(4, 7, 2);  //cruiser pattern
+            this.generateBody(5, 8, 1);  //cruiser pattern
+            this.bodyPattern = "cruiser";
         }
-        /*let vertexCount = floor(Math.random()*10);
-        while (vertexCount < 2 || vertexCount > 6) vertexCount = floor(Math.random()*10);
-        this.generateBody(vertexCount);*/
+        if (this.bodyPattern == "fighter") this.normalizeEnds();
+        this.normalizeWaists();
+        if (this.bodyPattern == "cruiser") this.elongateCruiser();
 
     }
 
@@ -76,7 +72,7 @@ class Blueprint {
         let noiseSeed1 = Math.random();
         let noiseSeed2 = Math.random();
         this.xVertices.push(noise(noiseSeed1)*width/5);
-        this.yVertices.push(noise(noiseSeed2)*height);
+        this.yVertices.push(noise(noiseSeed2)*height/3);
         for (let i=0; i<vertexCount; i++) {
             noiseSeed1 += noiseRate;
             noiseSeed2 += noiseRate;
@@ -86,11 +82,11 @@ class Blueprint {
         this.yVertices.sort( (a,b)=>a-b );
         //console.log("xVertice after generateBody: ", this.xVertices);
         //console.log("yVertices after generateBody: ", this.yVertices);
-        this.spaceOutYs();
+        this.smoothOut();
         //console.log("noiseRate: ", noiseRate);
     }
 
-    spaceOutYs() {
+    smoothOut() {
         let xcopies = this.xVertices;
         let ycopies = this.yVertices;
         let changedSomething = true;
@@ -114,7 +110,6 @@ class Blueprint {
             //console.log("in for loop iteration ", timeOut, ":  ", this.xVertices);
             timeOut++;
             if (timeOut > 200) throw "timeout";
-
         }
         }
         catch (a) {
@@ -124,10 +119,32 @@ class Blueprint {
             console.log("y vertices");
             console.log(ycopies);
         };
-
         try {if (stop) throw "stopp";}
         catch(a) {console.log(a)};
+    }
 
+
+    normalizeEnds() {
+        if (this.xVertices[0] > this.xVertices[2] || this.xVertices[0] > width/10) {
+            this.xVertices[0] = Math.random()*width/14;
+        }
+        if (this.xVertices[this.xVertices.length-2] < this.xVertices[0]) this.xVertices[this.xVertices.length-2] = this.xVertices[0]*2;
+    }
+
+    normalizeWaists() {
+        for (let i=1; i<this.xVertices.length; i++) {
+            if (this.xVertices[i] < width/12) this.xVertices[i] = width/12;
+        }
+    }
+
+    elongateCruiser() {
+        let minLength = 1.5*height/3;
+        let totalLength = this.yVertices[this.yVertices.length-1] - this.yVertices[0];
+        if (totalLength < minLength) {
+            console.log("elongate trigger");
+            let multiplier = minLength / totalLength;
+            for (let i=0; i<this.yVertices.length; i++) this.yVertices[i] *= multiplier;
+        }
     }
 
 }
