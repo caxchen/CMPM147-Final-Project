@@ -13,12 +13,15 @@ class Blueprint {
         this.shieldsColor = [0, 0, 0];
         this.shieldsThickness = 1;
         this.hullColor;
+        this.cockpitPattern;
+        this.cockpit;
     }
 
     generate() {
         this.xVertices = [];
         this.yVertices = [];
         let randomBody = Math.random();
+        randomBody = 0.4;
         if (randomBody < 0.5) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
@@ -34,6 +37,7 @@ class Blueprint {
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
         this.generateShields();
         this.hullColor = (Math.random()*205) + 50
+        if (this.bodyPattern == "fighter") this.generateCockpit();
 
     }
 
@@ -52,6 +56,12 @@ class Blueprint {
             vertex(-this.xVertices[j], this.yVertices[j]);
         }
         endShape(CLOSE);
+        fill(50, 30, 120);
+        noStroke();
+        if (this.cockpitPattern == "ellipse") {
+            ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
+            //console.log(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
+        }
     }
 
 
@@ -158,4 +168,28 @@ class Blueprint {
         }
     }
 
+    generateCockpit() {
+        let maxWidth = findMax(this.xVertices);
+        let length = this.yVertices[this.yVertices.length-1] - this.yVertices[0];
+        let gotRand = Math.random();
+        gotRand = 0.2;
+        if (gotRand < 0.30) { //ellipse pattern
+            this.cockpitPattern = "ellipse";
+            this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
+        } else if (gotRand < 0.60) { //trapezoid pattern
+        } else if (gotRand < 0.90) { //trapezoid+rectangle pattern
+        } else { //strip pattern
+        }
+    }
+
+}
+
+
+
+function findMax(searchArray) {
+    let max = 0;
+    for (let i=0; i<searchArray.length; i++) {
+        if (searchArray[i] > max) max = searchArray[i];
+    }
+    return max;
 }
