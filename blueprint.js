@@ -9,6 +9,10 @@ class Blueprint {
         this.xVertices = [];
         this.yVertices = [];
         this.bodyPattern;
+        this.shieldsFlag = false;
+        this.shieldsColor = [0, 0, 0];
+        this.shieldsThickness = 1;
+        this.hullColor;
     }
 
     generate() {
@@ -28,31 +32,18 @@ class Blueprint {
         if (this.bodyPattern == "fighter") this.normalizeEnds();
         this.normalizeWaists();
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
+        this.generateShields();
+        this.hullColor = (Math.random()*205) + 50
 
-    }
-
-    testGenerate() {
-        this.testGenerateBody();
-    }
-    testGenerateBody() {
-        this.yVertices.push(183);
-        this.yVertices.push(200);
-        this.yVertices.push(230);
-        this.yVertices.push(250);
-        this.yVertices.push(260);
-
-        this.xVertices.push(40);
-        this.xVertices.push(50);
-        this.xVertices.push(20);
-        this.xVertices.push(100);
-        this.xVertices.push(30);
-
-        this.yVertices.sort( (a,b)=>a-b );
-        this.spaceOutYs();
     }
 
     render() {
         translate(width/2, 0);
+        if (this.shieldsFlag) {
+            stroke(this.shieldsColor[0], this.shieldsColor[1], this.shieldsColor[2]);
+            strokeWeight(this.shieldsThickness);
+        } else noStroke()
+        fill(this.hullColor);
         beginShape();
         for (let i=0; i<this.xVertices.length; i++) {
             vertex(this.xVertices[i], this.yVertices[i]);
@@ -141,9 +132,29 @@ class Blueprint {
         let minLength = 1.5*height/3;
         let totalLength = this.yVertices[this.yVertices.length-1] - this.yVertices[0];
         if (totalLength < minLength) {
-            console.log("elongate trigger");
             let multiplier = minLength / totalLength;
             for (let i=0; i<this.yVertices.length; i++) this.yVertices[i] *= multiplier;
+        }
+    }
+
+    generateShields() {
+        let gotRand1 = Math.random();
+        if (gotRand1 < 0.6) {
+            this.shieldsFlag = false;
+            return;
+        }
+        this.shieldsFlag = true;
+        this.shieldsThickness = Math.random()*9 + 1;
+        if (gotRand1 < 0.8) {  //blue shields
+            this.shieldsColor = [0, 140, 255];
+        } else if (gotRand1 < 0.9) {  //orange shields
+            this.shieldsColor = [255, 166, 0];
+        } else if (gotRand1 < 0.93) { //yellow shields
+            this.shieldsColor = [237, 222, 14];
+        } else if (gotRand1 < 0.98) { //green shields
+            this.shieldsColor = [0, 237, 95];
+        } else {  //rare pink shields
+            this.shieldsColor = [237, 0, 182];
         }
     }
 

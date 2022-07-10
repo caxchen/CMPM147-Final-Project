@@ -18,7 +18,7 @@ let testrate = 0.01;
 function draw() {
     background(0);
     //ship.generate();
-    stroke(255);
-    line(width/4, 0, width/4, 1.5*height/3);
+    stroke(0, 140, 255);
+    //line(width/4, 0, width/4, 1.5*height/3);
     ship.render();
 }
