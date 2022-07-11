@@ -39,14 +39,13 @@ class Blueprint {
         this.generateShields();
         this.hullColor = (Math.random()*205) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
-        console.log(this.cockpit);
     }
 
     render() {
         translate(width/2, 0);
         if (this.shieldsFlag) {
             stroke(this.shieldsColor[0], this.shieldsColor[1], this.shieldsColor[2]);
-            strokeWeight(this.shieldsThickness);
+            strokeWeight(4);
         } else noStroke()
         fill(this.hullColor);
         beginShape();  //creating body
@@ -62,7 +61,6 @@ class Blueprint {
         if (this.bodyPattern = "fighter") {
             if (this.cockpitPattern == "ellipse") {
                 ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
-                //console.log(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
             } else if (this.cockpitPattern = "trapezoid" || this.cockpitPattern == "hexagon") {
                 beginShape();
                 for (let i=0; i<this.cockpit.length; i++) {
@@ -179,18 +177,22 @@ class Blueprint {
         let maxWidth = findMax(this.xVertices);
         let length = this.yVertices[this.yVertices.length-1] - this.yVertices[0];
         let gotRand = Math.random();
-        gotRand = 0.5;
-        //if (this.xVertices[0] < )
-        if (gotRand < 0.30) { //ellipse pattern
+        if (gotRand < 0.40) { //ellipse pattern
             this.cockpitPattern = "ellipse";
             this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
-        } else if (gotRand < 0.6 && this.xVertices[0] < this.xVertices[1]) { //trapezoid pattern
+        } else if (gotRand < 0.8 && this.xVertices[0] < this.xVertices[1]) { //trapezoid pattern
             this.cockpitPattern = "trapezoid";
             this.cockpit = [this.xVertices[0]/3, this.yVertices[0]+length/3, this.xVertices[1]/3, this.yVertices[0] + 2*length/3, 
             -this.xVertices[1]/3, this.yVertices[0] + 2*length/3, -this.xVertices[0]/3, this.yVertices[0]+length/3];
 
-        } else if (gotRand < 0.90) { //trapezoid+rectangle pattern
-        } else { //strip pattern
+        }  else if (this.xVertices[0] > width/16) { //strip pattern
+            this.cockpitPattern = "trapezoid";
+            this.cockpit = [this.xVertices[1]/2, this.yVertices[0]+length/3, this.xVertices[1]/2, this.yVertices[0]+length/3+length/12,
+            this.xVertices[1]/2-this.xVertices[1]/6, this.yVertices[0]+length/3+length/17, 
+            -(this.xVertices[1]/2-this.xVertices[1]/6), this.yVertices[0]+length/3+length/17,
+            -this.xVertices[1]/2, this.yVertices[0]+length/3+length/12, -this.xVertices[1]/2, this.yVertices[0]+length/3];
+
+        } else {
             this.cockpitPattern = "ellipse";
             this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
         }

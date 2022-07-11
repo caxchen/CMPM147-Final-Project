@@ -19,6 +19,6 @@ function draw() {
     background(0);
     //ship.generate();
     stroke(0, 140, 255);
-    //line(width/4, 0, width/4, 1.5*height/3);
+    line(0, height/6, width/8, height/6);
     ship.render();
 }
