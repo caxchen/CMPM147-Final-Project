@@ -16,7 +16,9 @@ class Blueprint {
         this.cockpitPattern;
         this.cockpit;
         this.cockpitColor;
-        this.thrusters;
+        this.thrusterX;
+        this.thrusterWidth;
+        this.thrusterLength;
     }
 
     generate() {
@@ -45,13 +47,22 @@ class Blueprint {
 
     render() {
         line(width/2, height - height/15, width/2 + measureLine, height - height/15);
+
         translate(width/2, 0);
+        //render thrusters first so it's below the main body
+        fill(this.hullColor-20);
+        noStroke();
+        for (let i=0; i<this.thrusterX.length; i++) {
+            rect(this.thrusterX[i], this.yVertices[this.yVertices.length-1]-10, this.thrusterWidth, this.thrusterLength);
+        }
+        //set up shields
         if (this.shieldsFlag) {
             stroke(this.shieldsColor[0], this.shieldsColor[1], this.shieldsColor[2]);
             strokeWeight(5);
         } else noStroke()
+        //render body
         fill(this.hullColor);
-        beginShape();  //creating body
+        beginShape(); 
         for (let i=0; i<this.xVertices.length; i++) {
             vertex(this.xVertices[i], this.yVertices[i]);
         }
@@ -61,7 +72,8 @@ class Blueprint {
         endShape(CLOSE);
         fill(50, 30, 120);
         noStroke();
-        if (this.bodyPattern == "fighter") {
+        //render cockpit
+        if (this.bodyPattern == "fighter") { 
             fill(this.cockpitColor);
             if (this.cockpitPattern == "ellipse") {
                 ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
@@ -228,16 +240,21 @@ class Blueprint {
         //THEN figure out how many thrusters you can fit onto the back.  backsize/thrusterwidth.  then put them on
         //THEN see if there are any other places you can fit thrusters
         let backLength = 2 * this.xVertices[this.xVertices.length - 1];
-        measureLine = backLength/2;
-        //console.log(backLength);
-        let thrusterWidth = width/10;
-        let minThrusters = Math.floor(backLength/thrusterWidth);
+        this.thrusterWidth = width/10; //default width just for acquiring thrusterCount
+        let minThrusters = Math.floor(backLength/this.thrusterWidth);
         if (minThrusters == 0) minThrusters = 1;
         let maxThrusters = minThrusters + 1;
         if (minThrusters > 2) minThrusters--;
-        //console.log(minThrusters, " to ", maxThrusters);
-        let thrusterCount = minThrusters + Math.floor( Math.random() * (maxThrusters+1-minThrusters) );
-        //console.log("got ", thrusterCount);
+        let thrusterCount = minThrusters + Math.floor( Math.random() * (maxThrusters+1-minThrusters) ); //thrusterCount done
+        console.log(thrusterCount);
+        this.thrusterWidth = backLength / thrusterCount;
+        this.thrusterWidth *= 0.7;
+        measureLine = this.thrusterWidth;
+        this.thrusterX = [];
+        for (let i=1; i<=thrusterCount; i++) {
+            this.thrusterX.push(i*backLength/thrusterCount - backLength/2 - this.thrusterWidth - 0.15*backLength/thrusterCount);
+        }
+        this.thrusterLength = (0.5 + Math.random()) * this.thrusterWidth; //0.5 to 1.5
     }
 
 }
