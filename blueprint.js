@@ -38,7 +38,6 @@ class Blueprint {
         this.generateShields();
         this.hullColor = (Math.random()*205) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
-        else this.generateBridge();
         this.generateThrusters();
     }
 
@@ -214,16 +213,14 @@ class Blueprint {
 
     }
 
-    generateBridge() {
-        //Maybe has multiple bridges based on how long it is
-    }
 
 
     generateThrusters() {
         //FIRST generate thruster size within a range
         //THEN figure out how many thrusters you can fit onto the back.  backsize/thrusterwidth.  then put them on
         //THEN see if there are any other places you can fit thrusters
-
+        let backLength = 2 * this.xVertices[Math.floor(this.xVertices.length/2)];
+        console.log(backLength);
     }
 
 }
