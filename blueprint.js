@@ -1,4 +1,5 @@
 let stop = false;
+let measureLine = false;
 
 class Blueprint {
     constructor() {
@@ -15,6 +16,7 @@ class Blueprint {
         this.cockpitPattern;
         this.cockpit;
         this.cockpitColor;
+        this.thrusters;
     }
 
     generate() {
@@ -36,12 +38,13 @@ class Blueprint {
         this.normalizeWaists();
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
         this.generateShields();
-        this.hullColor = (Math.random()*205) + 50
+        this.hullColor = (Math.random()*190) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
         this.generateThrusters();
     }
 
     render() {
+        line(width/2, height - height/15, width/2 + measureLine, height - height/15);
         translate(width/2, 0);
         if (this.shieldsFlag) {
             stroke(this.shieldsColor[0], this.shieldsColor[1], this.shieldsColor[2]);
@@ -59,7 +62,6 @@ class Blueprint {
         fill(50, 30, 120);
         noStroke();
         if (this.bodyPattern == "fighter") {
-            console.log(this.bodyPattern);
             fill(this.cockpitColor);
             if (this.cockpitPattern == "ellipse") {
                 ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
@@ -119,6 +121,14 @@ class Blueprint {
             timeOut++;
             if (timeOut > 200) throw "timeout";
         }
+        if (xdif > maxdif*ydif || xdif < -maxdif*ydif) {
+            console.log("spike detected");
+            console.log("x vertices");
+            console.log(xcopies);
+            console.log("y vertices");
+            console.log(ycopies);
+            console.log("xdif: ", xdif, "  ydif: ", ydif);
+        }
         }
         catch (a) {
             console.log(a);
@@ -126,9 +136,8 @@ class Blueprint {
             console.log(xcopies);
             console.log("y vertices");
             console.log(ycopies);
+            console.log("xdif: ", xdif, "  ydif: ", ydif);
         };
-        try {if (stop) throw "stopp";}
-        catch(a) {console.log(a)};
     }
 
 
@@ -214,13 +223,21 @@ class Blueprint {
     }
 
 
-
     generateThrusters() {
         //FIRST generate thruster size within a range
         //THEN figure out how many thrusters you can fit onto the back.  backsize/thrusterwidth.  then put them on
         //THEN see if there are any other places you can fit thrusters
-        let backLength = 2 * this.xVertices[Math.floor(this.xVertices.length/2)];
-        console.log(backLength);
+        let backLength = 2 * this.xVertices[this.xVertices.length - 1];
+        measureLine = backLength/2;
+        //console.log(backLength);
+        let thrusterWidth = width/10;
+        let minThrusters = Math.floor(backLength/thrusterWidth);
+        if (minThrusters == 0) minThrusters = 1;
+        let maxThrusters = minThrusters + 1;
+        if (minThrusters > 2) minThrusters--;
+        //console.log(minThrusters, " to ", maxThrusters);
+        let thrusterCount = minThrusters + Math.floor( Math.random() * (maxThrusters+1-minThrusters) );
+        //console.log("got ", thrusterCount);
     }
 
 }
