@@ -11,7 +11,6 @@ class Blueprint {
         this.bodyPattern;
         this.shieldsFlag = false;
         this.shieldsColor = [0, 0, 0];
-        this.shieldsThickness = 1;
         this.hullColor;
         this.cockpitPattern;
         this.cockpit;
@@ -45,7 +44,7 @@ class Blueprint {
         translate(width/2, 0);
         if (this.shieldsFlag) {
             stroke(this.shieldsColor[0], this.shieldsColor[1], this.shieldsColor[2]);
-            strokeWeight(4);
+            strokeWeight(5);
         } else noStroke()
         fill(this.hullColor);
         beginShape();  //creating body
@@ -59,9 +58,10 @@ class Blueprint {
         fill(50, 30, 120);
         noStroke();
         if (this.bodyPattern = "fighter") {
+            fill(this.cockpitColor);
             if (this.cockpitPattern == "ellipse") {
                 ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
-            } else if (this.cockpitPattern = "trapezoid" || this.cockpitPattern == "hexagon") {
+            } else if (this.cockpitPattern = "trapezoid" || this.cockpitPattern == "strip") {
                 beginShape();
                 for (let i=0; i<this.cockpit.length; i++) {
                     vertex(this.cockpit[i], this.cockpit[i+1]);
@@ -159,7 +159,6 @@ class Blueprint {
             return;
         }
         this.shieldsFlag = true;
-        this.shieldsThickness = Math.random()*9 + 1;
         if (gotRand1 < 0.8) {  //blue shields
             this.shieldsColor = [0, 140, 255];
         } else if (gotRand1 < 0.9) {  //orange shields
@@ -186,7 +185,7 @@ class Blueprint {
             -this.xVertices[1]/3, this.yVertices[0] + 2*length/3, -this.xVertices[0]/3, this.yVertices[0]+length/3];
 
         }  else if (this.xVertices[0] > width/16) { //strip pattern
-            this.cockpitPattern = "trapezoid";
+            this.cockpitPattern = "strip";
             this.cockpit = [this.xVertices[1]/2, this.yVertices[0]+length/3, this.xVertices[1]/2, this.yVertices[0]+length/3+length/12,
             this.xVertices[1]/2-this.xVertices[1]/6, this.yVertices[0]+length/3+length/17, 
             -(this.xVertices[1]/2-this.xVertices[1]/6), this.yVertices[0]+length/3+length/17,
@@ -196,6 +195,20 @@ class Blueprint {
             this.cockpitPattern = "ellipse";
             this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
         }
+        if (this.shieldsFlag) this.cockpitColor = this.shieldsColor;
+        else {
+            let gotRand2 = Math.random();
+            if (gotRand2 < 0.1) this.cockpitColor = [115, 43, 33]; //dark red
+            else if (gotRand2 < 0.2) this.cockpitColor = [209, 143, 63]; //orange
+            else if (gotRand2 < 0.3) this.cockpitColor = [219, 206, 107]; //yellow
+            else if (gotRand2 < 0.4) this.cockpitColor = [51, 138, 100]; //green
+            else if (gotRand2 < 0.5) this.cockpitColor = [74, 148, 145]; //dark cyan
+            else if (gotRand2 < 0.6) this.cockpitColor = [78, 84, 135]; //dark blue
+            else if (gotRand2 < 0.7) this.cockpitColor = [99, 78, 135]; //purple
+            else if (this.cockpitPattern == "strip") this.cockpitColor = [115, 43, 33]; //dark red;
+            else this.cockpitColor = [74, 148, 145]; //dark cyan
+        }
+
     }
 
 }
