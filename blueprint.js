@@ -21,7 +21,7 @@ class Blueprint {
         this.xVertices = [];
         this.yVertices = [];
         let randomBody = Math.random();
-        randomBody = 0.4;
+        //randomBody = 0.4;
         if (randomBody < 0.5) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
@@ -59,11 +59,12 @@ class Blueprint {
         endShape(CLOSE);
         fill(50, 30, 120);
         noStroke();
-        if (this.bodyPattern = "fighter") {
+        if (this.bodyPattern == "fighter") {
+            console.log(this.bodyPattern);
             fill(this.cockpitColor);
             if (this.cockpitPattern == "ellipse") {
                 ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
-            } else if (this.cockpitPattern = "trapezoid" || this.cockpitPattern == "strip") {
+            } else if (this.cockpitPattern = "polygon" || this.cockpitPattern == "strip") {
                 beginShape();
                 for (let i=0; i<this.cockpit.length; i++) {
                     vertex(this.cockpit[i], this.cockpit[i+1]);
@@ -182,7 +183,7 @@ class Blueprint {
             this.cockpitPattern = "ellipse";
             this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
         } else if (gotRand < 0.8 && this.xVertices[0] < this.xVertices[1]) { //trapezoid pattern
-            this.cockpitPattern = "trapezoid";
+            this.cockpitPattern = "polygon";
             this.cockpit = [this.xVertices[0]/3, this.yVertices[0]+length/3, this.xVertices[1]/3, this.yVertices[0] + 2*length/3, 
             -this.xVertices[1]/3, this.yVertices[0] + 2*length/3, -this.xVertices[0]/3, this.yVertices[0]+length/3];
 
