@@ -15,6 +15,7 @@ class Blueprint {
         this.hullColor;
         this.cockpitPattern;
         this.cockpit;
+        this.cockpitColor;
     }
 
     generate() {
@@ -38,7 +39,7 @@ class Blueprint {
         this.generateShields();
         this.hullColor = (Math.random()*205) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
-
+        console.log(this.cockpit);
     }
 
     render() {
@@ -48,7 +49,7 @@ class Blueprint {
             strokeWeight(this.shieldsThickness);
         } else noStroke()
         fill(this.hullColor);
-        beginShape();
+        beginShape();  //creating body
         for (let i=0; i<this.xVertices.length; i++) {
             vertex(this.xVertices[i], this.yVertices[i]);
         }
@@ -58,9 +59,18 @@ class Blueprint {
         endShape(CLOSE);
         fill(50, 30, 120);
         noStroke();
-        if (this.cockpitPattern == "ellipse") {
-            ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
-            //console.log(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
+        if (this.bodyPattern = "fighter") {
+            if (this.cockpitPattern == "ellipse") {
+                ellipse(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
+                //console.log(this.cockpit[0], this.cockpit[1], this.cockpit[2], this.cockpit[3]);
+            } else if (this.cockpitPattern = "trapezoid" || this.cockpitPattern == "hexagon") {
+                beginShape();
+                for (let i=0; i<this.cockpit.length; i++) {
+                    vertex(this.cockpit[i], this.cockpit[i+1]);
+                    i++;
+                }
+                endShape(CLOSE);
+            }
         }
     }
 
@@ -81,10 +91,7 @@ class Blueprint {
             this.yVertices.push( noise(noiseSeed2)*height );
         }
         this.yVertices.sort( (a,b)=>a-b );
-        //console.log("xVertice after generateBody: ", this.xVertices);
-        //console.log("yVertices after generateBody: ", this.yVertices);
         this.smoothOut();
-        //console.log("noiseRate: ", noiseRate);
     }
 
     smoothOut() {
@@ -172,13 +179,20 @@ class Blueprint {
         let maxWidth = findMax(this.xVertices);
         let length = this.yVertices[this.yVertices.length-1] - this.yVertices[0];
         let gotRand = Math.random();
-        gotRand = 0.2;
+        gotRand = 0.5;
+        //if (this.xVertices[0] < )
         if (gotRand < 0.30) { //ellipse pattern
             this.cockpitPattern = "ellipse";
             this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
-        } else if (gotRand < 0.60) { //trapezoid pattern
+        } else if (gotRand < 0.6 && this.xVertices[0] < this.xVertices[1]) { //trapezoid pattern
+            this.cockpitPattern = "trapezoid";
+            this.cockpit = [this.xVertices[0]/3, this.yVertices[0]+length/3, this.xVertices[1]/3, this.yVertices[0] + 2*length/3, 
+            -this.xVertices[1]/3, this.yVertices[0] + 2*length/3, -this.xVertices[0]/3, this.yVertices[0]+length/3];
+
         } else if (gotRand < 0.90) { //trapezoid+rectangle pattern
         } else { //strip pattern
+            this.cockpitPattern = "ellipse";
+            this.cockpit = [0, this.yVertices[0] + length/2, maxWidth/3, length/3];
         }
     }
 
