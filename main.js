@@ -21,9 +21,8 @@ function draw() {
     stars.render();
     //ship.generate();
     stroke(0, 140, 255);
-    line(0, height/8, width/40, height/8);
-    line(0, height/7, width/20, height/7);
-    line(0, height/6, width/10, height/6);
+    line(0, height-height/8, width, height-height/8);
+    line(0, height-height/7, width, height-height/7);
     noStroke();
     fill(255);
     circle(700, 700, width/500); //130 max, 500 min
@@ -39,13 +38,14 @@ class Starfield {
         this.diameters = [];
         this.count = 500;
         this.generate();
+        this.scrollFlag = false;
     }
 
     generate() {
         for (let i=0; i<this.count; i++) {
             this.xVertices.push(Math.random()*width);
-            this.yVertices.push(Math.random()*height);
-            this.diameters.push(width/(130 + Math.random()*370));
+            this.yVertices.push(Math.random()*(height+100)-100);
+            this.diameters.push(width/(200 + Math.random()*300));
         }
     }
 
@@ -55,7 +55,7 @@ class Starfield {
         for (let i=0; i<this.xVertices.length; i++) {
             circle(this.xVertices[i], this.yVertices[i], this.diameters[i]);
         }
-        this.parallaxScroll();
+        if (this.scrollFlag) this.parallaxScroll();
     }
 
     parallaxScroll() {

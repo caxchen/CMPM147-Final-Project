@@ -23,6 +23,8 @@ class Blueprint {
         this.thrusterAnimation = [this.thrusterSpritesheet.get(0, 0, 567, 1134), this.thrusterSpritesheet.get(567, 0, 567, 1134),
         this.thrusterSpritesheet.get(1134, 0, 567, 1134), this.thrusterSpritesheet.get(1701, 0, 567, 1134)];  //this array doesn't work for some reason.
         this.thrusterFrame = 0;
+        this.name = "SV-1 Ares"; //a default name
+        this.font = loadFont("ERASMD.TTF");
     }
 
     generate() {
@@ -47,6 +49,7 @@ class Blueprint {
         this.hullColor = (Math.random()*190) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
         this.generateThrusters();
+        this.generateName();
     }
 
     render() {
@@ -98,6 +101,10 @@ class Blueprint {
                 endShape(CLOSE);
             }
         }
+        textSize(40);
+        fill(255);
+        textFont(this.font);
+        text(this.name, width/30-width/2, height/20);
     }
 
 
@@ -267,6 +274,34 @@ class Blueprint {
             this.thrusterX.push(i*backLength/thrusterCount - backLength/2 - this.thrusterWidth - 0.15*backLength/thrusterCount);
         }
         this.thrusterLength = (0.5 + Math.random()) * this.thrusterWidth; //0.5 to 1.5
+    }
+
+    generateName() {
+        //constructor was getting a bit crowded.
+        this.pre = ["Paan-", "Baan-", "Ven", "Ad", "Tain", "Noor", "Skur", "Ti", "Yi", "Fai", "Om", "Can", "Um", "Kor", "Xor", 
+        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala"];
+        this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
+        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk"];
+        this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
+        "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic"];
+        this.noun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
+        "Spirit", "Vision", "Dude", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila"];
+        this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
+        "Kolkata", "Tianjin", "Taipei", "Ulaanbaatar", "Antanarivo", "Cairo", "Pegasus", "Golem", "Jotun", "Ankara", "Dakar", "Valencia",
+        "Daegu", "Resolute", "Hera", "Roskilde", "Talinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
+        "Malta", "Khartoum", "Nairobi", "Lisbon", "Königsberg", "Atlanta", "Hiawatha", "Mom's Spaghetti", "Quito", "Raphael", "Abaddon",
+        "Ezekiel", "Saint Augustine", "Bonaventure", "Caleston", "Canterbury", "Ravenna", "Mercantilist"];
+        this.fighterNoun = ["Basilisk", "Archer", "Antares", "Magi", "Marauder", "Outlander", "Farsight", "Owl", "Eagle", "Salamander",
+        "Goblin", "Lamp", "Galliot", "Dragonfly", "Locust", "Mantis", "Cicada", "Castella", "Ghost", "Phantom", "Aurora", "Vortex",
+        "Pulsar", "Quasar", "Nomad"]
+        this.cruiserTypes = ["Yacht", "Cargo Ship", "Battleship", "Frigate", "Destroyer", "Dreadnought", "Transport", "Passenger Ship",
+        "Exploration Vessel", "Science Vessel", "Trade Vessel"]
+        //Note: US Navy Cruisers are named after cities
+        if (this.bodyPattern == "fighter") {
+
+        } else if (this.bodyPattern == "cruiser") {
+
+        }
     }
 
 }
