@@ -19,6 +19,10 @@ class Blueprint {
         this.thrusterX;
         this.thrusterWidth;
         this.thrusterLength;
+        this.thrusterSpritesheet = loadImage("thrusters.png");
+        this.thrusterAnimation = [this.thrusterSpritesheet.get(0, 0, 567, 1134), this.thrusterSpritesheet.get(567, 0, 567, 1134),
+        this.thrusterSpritesheet.get(1134, 0, 567, 1134), this.thrusterSpritesheet.get(1701, 0, 567, 1134)];  //this array doesn't work for some reason.
+        this.thrusterFrame = 0;
     }
 
     generate() {
@@ -50,9 +54,17 @@ class Blueprint {
 
         translate(width/2, 0);
         //render thrusters first so it's below the main body
+        this.thrusterFrame += 1;
+        if (this.thrusterFrame >= this.thrusterAnimation.length) this.thrusterFrame = 0;
         fill(this.hullColor-20);
         noStroke();
+        let snapshot;
         for (let i=0; i<this.thrusterX.length; i++) {
+            //this.thrusterAnimation[Math.floor(this.thrusterFrame)].resize(this.thrusterWidth, this.thrusterWidth*2);  //don't know why this doesn't work
+            snapshot = this.thrusterSpritesheet.get(this.thrusterFrame*567, 0, 567, 1134);  //this is the workaround for the thrusterAnimation array's mysterious bug
+            snapshot.resize(this.thrusterWidth*1.7, this.thrusterWidth*2);
+            image(snapshot, this.thrusterX[i]-this.thrusterWidth*0.7/2, this.yVertices[this.yVertices.length-1]+this.thrusterLength/2);
+            //console.log(this.thrusterX[i], this.yVertices[this.yVertices.length-1]+this.thrusterLength)
             rect(this.thrusterX[i], this.yVertices[this.yVertices.length-1]-10, this.thrusterWidth, this.thrusterLength);
         }
         //set up shields

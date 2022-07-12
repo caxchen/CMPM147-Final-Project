@@ -2,10 +2,11 @@ let ship;
 
 
 function setup() {
-    frameRate(1);
+    frameRate(30);
     createCanvas(800, 800);
     ship = new Blueprint();
     ship.generate();
+
     //ship.testGenerate();
 }
 
