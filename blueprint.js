@@ -236,7 +236,7 @@ class Blueprint {
             if (gotRand2 < 0.1) this.cockpitColor = [115, 43, 33]; //dark red
             else if (gotRand2 < 0.2) this.cockpitColor = [209, 143, 63]; //orange
             else if (gotRand2 < 0.3) this.cockpitColor = [219, 206, 107]; //yellow
-            else if (gotRand2 < 0.4) this.cockpitColor = [51, 138, 100]; //green
+            else if (gotRand2 < 0.4) this.cockpitColor = [37, 105, 75]; //green
             else if (gotRand2 < 0.5) this.cockpitColor = [74, 148, 145]; //dark cyan
             else if (gotRand2 < 0.6) this.cockpitColor = [78, 84, 135]; //dark blue
             else if (gotRand2 < 0.7) this.cockpitColor = [99, 78, 135]; //purple
