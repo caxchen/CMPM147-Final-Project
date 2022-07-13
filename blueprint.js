@@ -284,11 +284,11 @@ class Blueprint {
         "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic"];
-        this.noun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
-        "Spirit", "Vision", "Dude", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila"];
+        this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
+        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila"];
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
         "Kolkata", "Tianjin", "Taipei", "Ulaanbaatar", "Antanarivo", "Cairo", "Pegasus", "Golem", "Jotun", "Ankara", "Dakar", "Valencia",
-        "Daegu", "Resolute", "Hera", "Roskilde", "Talinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
+        "Daegu", "Resolute", "Hera", "Roskilde", "Tallinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
         "Malta", "Khartoum", "Nairobi", "Lisbon", "Königsberg", "Atlanta", "Mom's Spaghetti", "Quito", "Raphael", "Abaddon",
         "Ezekiel", "Saint Augustine", "Bonaventure", "Caleston", "Canterbury", "Ravenna", "Mercantilist", "Blackbeard"];
         //Note: US Navy Cruisers are named after cities
@@ -303,7 +303,6 @@ class Blueprint {
         // 48 - 57 is numbers
         if (this.bodyPattern == "fighter") {
             let gotRand1 = Math.random();
-            gotRand1 = 0.6;
             if (gotRand1 < 0.5) {  //prepost fighternoun
                 this.name += this.pre[Math.floor(Math.random()*this.pre.length)];
                 this.name += this.post[Math.floor(Math.random()*this.post.length)];
@@ -316,12 +315,19 @@ class Blueprint {
                 this.name += this.fighterNoun[Math.floor(Math.random()*this.fighterNoun.length)];
             }
         } else if (this.bodyPattern == "cruiser") {
-            
+            let gotRand2 = Math.random();
+            if (gotRand2 < 0.3) { // cruiserNoun of prepost
+                this.name += this.cruiserNoun[Math.floor(Math.random()*this.cruiserNoun.length)] + " of ";
+                this.name += this.pre[Math.floor(Math.random()*this.pre.length)];
+                this.name += this.post[Math.floor(Math.random()*this.post.length)];
+            } else if (gotRand2 < 0.7) { //nounSingle
+                this.name += this.nounSingle[Math.floor(Math.random()*this.nounSingle.length)];
+            } else { // adj cruiserNoun
+                this.name += this.adj[Math.floor(Math.random()*this.adj.length)] + " ";
+                this.name += this.cruiserNoun[Math.floor(Math.random()*this.cruiserNoun.length)];
+            }
         }
-        //let test = String.fromCharCode(90);
-        let test = "AAA";
-        test += 44;
-        console.log(test);
+        //this.name += String.fromCharCode(65+Math.floor(Math.random()*26));
     }
 
 }
