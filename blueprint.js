@@ -279,9 +279,9 @@ class Blueprint {
     generateName() {
         //constructor was getting a bit crowded.
         this.pre = ["Paan-", "Baan-", "Ven", "Ad", "Tain", "Noor", "Skur", "Ti", "Yi", "Fai", "Om", "Can", "Um", "Kor", "Xor", 
-        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala"];
+        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl"];
         this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
-        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk"];
+        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic"];
         this.noun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
@@ -289,19 +289,39 @@ class Blueprint {
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
         "Kolkata", "Tianjin", "Taipei", "Ulaanbaatar", "Antanarivo", "Cairo", "Pegasus", "Golem", "Jotun", "Ankara", "Dakar", "Valencia",
         "Daegu", "Resolute", "Hera", "Roskilde", "Talinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
-        "Malta", "Khartoum", "Nairobi", "Lisbon", "Königsberg", "Atlanta", "Hiawatha", "Mom's Spaghetti", "Quito", "Raphael", "Abaddon",
-        "Ezekiel", "Saint Augustine", "Bonaventure", "Caleston", "Canterbury", "Ravenna", "Mercantilist"];
+        "Malta", "Khartoum", "Nairobi", "Lisbon", "Königsberg", "Atlanta", "Mom's Spaghetti", "Quito", "Raphael", "Abaddon",
+        "Ezekiel", "Saint Augustine", "Bonaventure", "Caleston", "Canterbury", "Ravenna", "Mercantilist", "Blackbeard"];
+        //Note: US Navy Cruisers are named after cities
         this.fighterNoun = ["Basilisk", "Archer", "Antares", "Magi", "Marauder", "Outlander", "Farsight", "Owl", "Eagle", "Salamander",
         "Goblin", "Lamp", "Galliot", "Dragonfly", "Locust", "Mantis", "Cicada", "Castella", "Ghost", "Phantom", "Aurora", "Vortex",
-        "Pulsar", "Quasar", "Nomad"]
+        "Pulsar", "Quasar", "Nomad", "Firehawk", "Spriggan", "Sparrow", "Ringdancer", "Starskipper", "Beltskipper", "Corsair", "Calico",
+        "Wyvern", "Contrail", "Comet", "Hadron"];
         this.cruiserTypes = ["Yacht", "Cargo Ship", "Battleship", "Frigate", "Destroyer", "Dreadnought", "Transport", "Passenger Ship",
-        "Exploration Vessel", "Science Vessel", "Trade Vessel"]
-        //Note: US Navy Cruisers are named after cities
+        "Exploration Vessel", "Science Vessel", "Trade Vessel", "Flagship", "Resort Cruiser", "Medical Frigate"];
+        this.name = "";
+        // 65 - 90 is capital letters
+        // 48 - 57 is numbers
         if (this.bodyPattern == "fighter") {
-
+            let gotRand1 = Math.random();
+            gotRand1 = 0.6;
+            if (gotRand1 < 0.5) {  //prepost fighternoun
+                this.name += this.pre[Math.floor(Math.random()*this.pre.length)];
+                this.name += this.post[Math.floor(Math.random()*this.post.length)];
+                this.name += " ";
+                this.name += this.fighterNoun[Math.floor(Math.random()*this.fighterNoun.length)];
+            } else { // letter-number fighternoun 
+                this.name += String.fromCharCode(65+Math.floor(Math.random()*26))
+                this.name += "-";
+                this.name += Math.floor(Math.random() * 101) + " ";
+                this.name += this.fighterNoun[Math.floor(Math.random()*this.fighterNoun.length)];
+            }
         } else if (this.bodyPattern == "cruiser") {
-
+            
         }
+        //let test = String.fromCharCode(90);
+        let test = "AAA";
+        test += 44;
+        console.log(test);
     }
 
 }
