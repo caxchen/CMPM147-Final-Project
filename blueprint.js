@@ -16,6 +16,8 @@ class Blueprint {
         this.cockpitPattern;
         this.cockpit;
         this.cockpitColor;
+        this.bridgeX;
+        this.bridgeY;
         this.thrusterX;
         this.thrusterWidth;
         this.thrusterLength;
@@ -49,6 +51,7 @@ class Blueprint {
         if (this.yVertices[this.yVertices.length-1] > height-height/4) this.raise();
         this.hullColor = (Math.random()*190) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
+        else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
         this.generateName();
         //console.log(this.yVertices[this.yVertices.length-1], " vs ", height);
@@ -263,6 +266,31 @@ class Blueprint {
 
     }
 
+    generateBridge() {
+        //3 patterns
+        //1: 4 vertices.  begins and ends on reflectline
+        //2: 4 vertices.  none on reflectline
+        //3: starting vertex, 3 more vertices to form a quadrangle, ends at starting vertex.  makes 2 symmetrical shapes
+        let gotRand = Math.random();
+        gotRand = 0.3;
+        this.bridgeX = [];
+        this.bridgeY = [];
+        let maxX = findMin(this.xVertices);
+        let maxY = this.yVertices[this.yVertices.length]/6;
+        let start;
+        let startCompare1 = this.xVertices[2];
+        let startCompare2 = this.xVertices[1] + (this.xVertices[2] - this.xVertices[1])/2;
+        if (startCompare1 > startCompare2) start = this.yVertices[2];
+        else start = this.yVertices[1] + (this.yVertices[2] - this.yVertices[1])/2;
+        if (gotRand < 0.33) { //case 1
+            
+        } else if (gotRand < 0.66) {
+
+        } else {
+
+        }
+    }
+
 
     generateThrusters() {
         //FIRST generate thruster size within a range
@@ -351,4 +379,13 @@ function findMax(searchArray) {
         if (searchArray[i] > max) max = searchArray[i];
     }
     return max;
+}
+
+function findMin(searchArray) {
+    let min = searchArray[0];
+    for (let i=1; i<searchArray.length; i++) {
+        if (searchArray[i] < min) min = searchArray[i];
+    }
+    return min;
+
 }

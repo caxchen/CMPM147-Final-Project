@@ -24,7 +24,6 @@ function draw() {
     line(0, height-height/4, width, height-height/4);
     noStroke();
     fill(255);
-    circle(700, 700, width/500); //130 max, 500 min
     ship.render();
 
 }
