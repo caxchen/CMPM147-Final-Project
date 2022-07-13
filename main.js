@@ -10,7 +10,7 @@ function setup() {
     //ship.testGenerate();
 }
 
-
+//test
 
 function shipGenerate() { ship.generate(); }
 
