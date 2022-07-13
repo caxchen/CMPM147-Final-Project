@@ -51,7 +51,7 @@ class Blueprint {
         this.generateThrusters();
         this.generateName();
     }
-
+    
     render() {
         line(width/2, height - height/15, width/2 + measureLine, height - height/15);
 
