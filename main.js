@@ -10,7 +10,6 @@ function setup() {
     //ship.testGenerate();
 }
 
-//TEST COMMIT SWITCHED TO MAIN
 
 function shipGenerate() { ship.generate(); }
 
@@ -21,8 +20,8 @@ function draw() {
     stars.render();
     //ship.generate();
     stroke(0, 140, 255);
-    line(0, height-height/8, width, height-height/8);
-    line(0, height-height/7, width, height-height/7);
+    //line(0, height-height/8, width, height-height/8);
+    line(0, height-height/4, width, height-height/4);
     noStroke();
     fill(255);
     circle(700, 700, width/500); //130 max, 500 min

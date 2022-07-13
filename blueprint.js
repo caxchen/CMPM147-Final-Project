@@ -31,7 +31,7 @@ class Blueprint {
         this.xVertices = [];
         this.yVertices = [];
         let randomBody = Math.random();
-        //randomBody = 0.4;
+        randomBody = 0.6;
         if (randomBody < 0.5) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
@@ -45,13 +45,16 @@ class Blueprint {
         if (this.bodyPattern == "fighter") this.normalizeEnds();
         this.normalizeWaists();
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
-        this.generateShields();
+        //this.generateShields();
+        if (this.yVertices[this.yVertices.length-1] > height-height/4) this.raise();
         this.hullColor = (Math.random()*190) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
         this.generateThrusters();
         this.generateName();
+        //console.log(this.yVertices[this.yVertices.length-1], " vs ", height);
     }
     
+
     render() {
         line(width/2, height - height/15, width/2 + measureLine, height - height/15);
 
@@ -194,6 +197,13 @@ class Blueprint {
         }
     }
 
+    raise() {
+        let constant = this.yVertices[this.yVertices.length-1] - (height-height/4);
+        for (let i=0; i<this.yVertices.length; i++) {
+            this.yVertices[i] -= constant;
+        }
+    }
+
     generateShields() {
         let gotRand1 = Math.random();
         if (gotRand1 < 0.6) {
@@ -283,9 +293,10 @@ class Blueprint {
         this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
         "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
-        "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic"];
+        "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
+        "Far"];
         this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
-        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila"];
+        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore"];
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
         "Kolkata", "Tianjin", "Taipei", "Ulaanbaatar", "Antanarivo", "Cairo", "Pegasus", "Golem", "Jotun", "Ankara", "Dakar", "Valencia",
         "Daegu", "Resolute", "Hera", "Roskilde", "Tallinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
