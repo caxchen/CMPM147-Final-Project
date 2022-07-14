@@ -27,25 +27,24 @@ class Blueprint {
         this.thrusterFrame = 0;
         this.name = "SV-1 Ares"; //a default name
         this.font = loadFont("ERASMD.TTF");
-        this.inner;
+        this.type = 1;  //1 is cruisers
     }
 
     generate() {
         this.xVertices = [];
         this.yVertices = [];
-        let randomBody = Math.random();
+        //let randomBody = Math.random();
         //randomBody = 0.6;
-        if (randomBody < 0.5) {
+        if (this.type == -1) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
             this.bodyPattern = "fighter";
         }
-        else if (randomBody >= 0.5) {
+        else if (this.type == 1) {
             console.log("generating cruiser");
             this.generateBody(5, 8, 1);  //cruiser pattern
             this.bodyPattern = "cruiser";
         }
-        this.inner = Math.random();
         if (this.bodyPattern == "fighter") this.normalizeEnds();
         this.normalizeWaists();
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
@@ -82,7 +81,8 @@ class Blueprint {
             strokeWeight(5);
         } else noStroke()
         //render body
-        fill(this.hullColor);
+        this.renderSymmetrical(this.xVertices, this.yVertices, this.hullColor);
+        /*fill(this.hullColor);
         beginShape(); 
         for (let i=0; i<this.xVertices.length; i++) {
             vertex(this.xVertices[i], this.yVertices[i]);
@@ -90,8 +90,9 @@ class Blueprint {
         for (let j=this.xVertices.length-1; j>=0; j--) {
             vertex(-this.xVertices[j], this.yVertices[j]);
         }
-        endShape(CLOSE);
-        if (true) this.renderInner();
+        endShape(CLOSE);*/
+        //asdf
+        this.renderInner();
         fill(50, 30, 120);
         noStroke();
         //render cockpit
@@ -109,15 +110,7 @@ class Blueprint {
             }
         //render command bridge
         } else if (this.bodyPattern == "cruiser") {
-            fill(this.hullColor-40);
-            beginShape();
-            for (let i=0; i<this.bridgeX.length; i++) {
-                vertex(this.bridgeX[i], this.bridgeY[i]);
-            }
-            for (let i=this.bridgeX.length-1; i>=0; i--) {
-                vertex(-this.bridgeX[i], this.bridgeY[i]);
-            }
-            endShape(CLOSE);
+            this.renderSymmetrical(this.bridgeX, this.bridgeY, this.hullColor - 40);
         }
         textSize(40);
         fill(255);
@@ -127,6 +120,18 @@ class Blueprint {
         strokeWeight(5);
         line(0, 0, 0, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
+    }
+
+    renderSymmetrical(xArray, yArray, color) {
+        fill(color);
+        beginShape();
+        for (let i=0; i<xArray.length; i++) {
+            vertex(xArray[i], yArray[i]);
+        }
+        for (let i=xArray.length-1; i>=0; i--) {
+            vertex(-xArray[i], yArray[i]);
+        }
+        endShape(CLOSE);
     }
 
     renderInner() { //render() was getting a bit crowded
