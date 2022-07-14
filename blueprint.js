@@ -59,7 +59,6 @@ class Blueprint {
     
 
     render() {
-        line(width/2, height - height/15, width/2 + measureLine, height - height/15);
 
         translate(width/2, 0);
         //render thrusters first so it's below the main body
@@ -106,11 +105,26 @@ class Blueprint {
                 }
                 endShape(CLOSE);
             }
+        //render command bridge
+        } else if (this.bodyPattern == "cruiser") {
+            fill(this.hullColor-30);
+            beginShape();
+            for (let i=0; i<this.bridgeX.length; i++) {
+                vertex(this.bridgeX[i], this.bridgeY[i]);
+            }
+            for (let i=this.bridgeX.length-1; i>=0; i--) {
+                vertex(-this.bridgeX[i], this.bridgeY[i]);
+            }
+            endShape(CLOSE);
         }
         textSize(40);
         fill(255);
         textFont(this.font);
         text(this.name, width/30-width/2, height/20);
+        stroke(252, 186, 3);
+        strokeWeight(5);
+        line(0, 0, 0, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
+        //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
     }
 
 
@@ -275,15 +289,23 @@ class Blueprint {
         gotRand = 0.3;
         this.bridgeX = [];
         this.bridgeY = [];
-        let maxX = findMin(this.xVertices);
-        let maxY = this.yVertices[this.yVertices.length]/6;
-        let start;
-        let startCompare1 = this.xVertices[2];
-        let startCompare2 = this.xVertices[1] + (this.xVertices[2] - this.xVertices[1])/2;
-        if (startCompare1 > startCompare2) start = this.yVertices[2];
-        else start = this.yVertices[1] + (this.yVertices[2] - this.yVertices[1])/2;
+        let maxX = findMinNotFront(this.xVertices);
+        //let maxLength = (this.yVertices[this.yVertices.length-1] - this.yVertices[0])/5;
+        let maxLength = height/20;
+        let start = this.yVertices[2];
+        //let startCompare1 = this.xVertices[2];
+        //let startCompare2 = this.xVertices[1] + (this.xVertices[2] - this.xVertices[1])/2;
+        //if (startCompare1 > startCompare2) start = this.yVertices[2];
+        //else start = this.yVertices[1] + (this.yVertices[2] - this.yVertices[1])/2;
         if (gotRand < 0.33) { //case 1
-            
+            this.bridgeX.push(0);
+            this.bridgeY.push(start);
+            this.bridgeX.push(maxX/2 + Math.random()*maxX/2);
+            this.bridgeY.push(start + Math.random()*maxLength);
+            this.bridgeX.push(this.bridgeX[1]);
+            this.bridgeY.push(this.bridgeY[1] + 0.85*maxLength);
+            this.bridgeX.push(0);
+            this.bridgeY.push(start + this.bridgeY[2] - this.bridgeY[1] + Math.random()*maxLength/8);
         } else if (gotRand < 0.66) {
 
         } else {
@@ -381,9 +403,9 @@ function findMax(searchArray) {
     return max;
 }
 
-function findMin(searchArray) {
-    let min = searchArray[0];
-    for (let i=1; i<searchArray.length; i++) {
+function findMinNotFront(searchArray) {
+    let min = searchArray[1];
+    for (let i=2; i<searchArray.length; i++) {
         if (searchArray[i] < min) min = searchArray[i];
     }
     return min;

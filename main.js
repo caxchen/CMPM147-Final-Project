@@ -36,7 +36,7 @@ class Starfield {
         this.diameters = [];
         this.count = 500;
         this.generate();
-        this.scrollFlag = false;
+        this.scrollFlag = true;
     }
 
     generate() {
@@ -58,7 +58,7 @@ class Starfield {
 
     parallaxScroll() {
         for (let i=0; i<this.yVertices.length; i++) {
-            this.yVertices[i] += this.diameters[i];
+            this.yVertices[i] += this.diameters[i]/20;
             if (this.yVertices[i] > height+100) this.yVertices[i] = -100;
         }
     }
