@@ -27,13 +27,14 @@ class Blueprint {
         this.thrusterFrame = 0;
         this.name = "SV-1 Ares"; //a default name
         this.font = loadFont("ERASMD.TTF");
+        this.inner;
     }
 
     generate() {
         this.xVertices = [];
         this.yVertices = [];
         let randomBody = Math.random();
-        randomBody = 0.6;
+        //randomBody = 0.6;
         if (randomBody < 0.5) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
@@ -44,6 +45,7 @@ class Blueprint {
             this.generateBody(5, 8, 1);  //cruiser pattern
             this.bodyPattern = "cruiser";
         }
+        this.inner = Math.random();
         if (this.bodyPattern == "fighter") this.normalizeEnds();
         this.normalizeWaists();
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
@@ -72,7 +74,6 @@ class Blueprint {
             snapshot = this.thrusterSpritesheet.get(this.thrusterFrame*567, 0, 567, 1134);  //this is the workaround for the thrusterAnimation array's mysterious bug
             snapshot.resize(this.thrusterWidth*1.7, this.thrusterWidth*2);
             image(snapshot, this.thrusterX[i]-this.thrusterWidth*0.7/2, this.yVertices[this.yVertices.length-1]+this.thrusterLength/2);
-            //console.log(this.thrusterX[i], this.yVertices[this.yVertices.length-1]+this.thrusterLength)
             rect(this.thrusterX[i], this.yVertices[this.yVertices.length-1]-10, this.thrusterWidth, this.thrusterLength);
         }
         //set up shields
@@ -90,6 +91,7 @@ class Blueprint {
             vertex(-this.xVertices[j], this.yVertices[j]);
         }
         endShape(CLOSE);
+        if (true) this.renderInner();
         fill(50, 30, 120);
         noStroke();
         //render cockpit
@@ -107,7 +109,7 @@ class Blueprint {
             }
         //render command bridge
         } else if (this.bodyPattern == "cruiser") {
-            fill(this.hullColor-30);
+            fill(this.hullColor-40);
             beginShape();
             for (let i=0; i<this.bridgeX.length; i++) {
                 vertex(this.bridgeX[i], this.bridgeY[i]);
@@ -125,6 +127,20 @@ class Blueprint {
         strokeWeight(5);
         line(0, 0, 0, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
+    }
+
+    renderInner() { //render() was getting a bit crowded
+        fill(this.hullColor-10);
+        let multiplier = 0.8;
+        let offset = this.yVertices[this.yVertices.length-1] - this.yVertices[this.yVertices.length-1]*multiplier;
+        beginShape(); 
+        for (let i=0; i<this.xVertices.length; i++) {
+            vertex(this.xVertices[i] * multiplier, this.yVertices[i]);
+        }
+        for (let j=this.xVertices.length-1; j>=0; j--) {
+            vertex(-this.xVertices[j] * multiplier, this.yVertices[j]);
+        }
+        endShape(CLOSE);
     }
 
 
@@ -352,9 +368,9 @@ class Blueprint {
     generateName() {
         //constructor was getting a bit crowded.
         this.pre = ["Paan-", "Baan-", "Ven", "Ad", "Tain", "Noor", "Skur", "Ti", "Yi", "Fai", "Om", "Can", "Um", "Kor", "Xor", 
-        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl"];
+        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl", "Ala"];
         this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
-        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen"];
+        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
         "Far"];
@@ -372,6 +388,7 @@ class Blueprint {
         "Wyvern", "Contrail", "Comet", "Hadron"];
         this.cruiserTypes = ["Yacht", "Cargo Ship", "Battleship", "Frigate", "Destroyer", "Dreadnought", "Transport", "Passenger Ship",
         "Exploration Vessel", "Science Vessel", "Trade Vessel", "Flagship", "Resort Cruiser", "Medical Frigate"];
+        this.cruiserPre = ["USS", "UNN", "ODF", "HMS", "MSC", "UCS", "USC"]
         this.name = "";
         // 65 - 90 is capital letters
         // 48 - 57 is numbers
@@ -390,6 +407,9 @@ class Blueprint {
             }
         } else if (this.bodyPattern == "cruiser") {
             let gotRand2 = Math.random();
+            this.name += String.fromCharCode(65+Math.floor(Math.random()*26));
+            this.name += String.fromCharCode(65+Math.floor(Math.random()*26));
+            this.name += String.fromCharCode(65+Math.floor(Math.random()*26)) + " ";
             if (gotRand2 < 0.3) { // cruiserNoun of prepost
                 this.name += this.cruiserNoun[Math.floor(Math.random()*this.cruiserNoun.length)] + " of ";
                 this.name += this.pre[Math.floor(Math.random()*this.pre.length)];
