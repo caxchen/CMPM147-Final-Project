@@ -286,7 +286,6 @@ class Blueprint {
         //2: 4 vertices.  none on reflectline
         //3: starting vertex, 3 more vertices to form a quadrangle, ends at starting vertex.  makes 2 symmetrical shapes
         let gotRand = Math.random();
-        gotRand = 0.6;
         this.bridgeX = [];
         this.bridgeY = [];
         let maxX = findMinNotFront(this.xVertices);
@@ -294,6 +293,7 @@ class Blueprint {
         let start = this.yVertices[2];
         this.bridgeX.push(0); //0
         this.bridgeY.push(start);
+        //gotRand = 0.7;
         if (gotRand < 0.33) { //case 1
             this.bridgeX.push(maxX/2 + Math.random()*maxX/2);
             this.bridgeY.push(start + Math.random()*maxLength);
@@ -310,8 +310,18 @@ class Blueprint {
             this.bridgeY.push(this.bridgeY[2]);
             this.bridgeX.push(this.bridgeX[3] + maxX/10); //4
             this.bridgeY.push(this.bridgeY[3] + maxLength/2);
-
-        } else {    
+        } else {  // case 3   
+            this.bridgeX.push(maxX/5); //1
+            this.bridgeY.push(start - maxX/6);
+            this.bridgeY[0] = this.bridgeY[1];
+            this.bridgeX.push(this.bridgeX[1] + maxX/3); //2
+            this.bridgeY.push(this.bridgeY[1] + maxLength/10);
+            this.bridgeX.push(this.bridgeX[2]); //3
+            this.bridgeY.push(this.bridgeY[2] + 2*maxLength);
+            this.bridgeX.push(this.bridgeX[1]); //4
+            this.bridgeY.push(this.bridgeY[3]);
+            this.bridgeX.push(this.bridgeX[1]); //5
+            this.bridgeY.push(this.bridgeY[1]);
 
         }
     }
