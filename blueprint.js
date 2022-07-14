@@ -28,6 +28,8 @@ class Blueprint {
         this.name = "SV-1 Ares"; //a default name
         this.font = loadFont("ERASMD.TTF");
         this.type = 1;  //1 is cruisers
+        this.upperBound = height/8;
+        this.lowerBound = height-height/4;
     }
 
     generate() {
@@ -49,7 +51,8 @@ class Blueprint {
         this.normalizeWaists();
         if (this.bodyPattern == "cruiser") this.elongateCruiser();
         //this.generateShields();
-        if (this.yVertices[this.yVertices.length-1] > height-height/4) this.raise();
+        if (this.yVertices[0] < this.upperBound) this.lower();
+        if (this.yVertices[this.yVertices.length-1] > height-height/4) this.shrink();
         this.hullColor = (Math.random()*190) + 50
         if (this.bodyPattern == "fighter") this.generateCockpit();
         else if (this.bodyPattern == "cruiser") this.generateBridge();
@@ -72,7 +75,7 @@ class Blueprint {
             //this.thrusterAnimation[Math.floor(this.thrusterFrame)].resize(this.thrusterWidth, this.thrusterWidth*2);  //don't know why this doesn't work
             snapshot = this.thrusterSpritesheet.get(this.thrusterFrame*567, 0, 567, 1134);  //this is the workaround for the thrusterAnimation array's mysterious bug
             snapshot.resize(this.thrusterWidth*1.7, this.thrusterWidth*2);
-            image(snapshot, this.thrusterX[i]-this.thrusterWidth*0.7/2, this.yVertices[this.yVertices.length-1]+this.thrusterLength/2);
+            image(snapshot, this.thrusterX[i]-this.thrusterWidth*0.7/2, this.yVertices[this.yVertices.length-1]+this.thrusterLength-20);
             rect(this.thrusterX[i], this.yVertices[this.yVertices.length-1]-10, this.thrusterWidth, this.thrusterLength);
         }
         //set up shields
@@ -118,7 +121,8 @@ class Blueprint {
         text(this.name, width/30-width/2, height/20);
         stroke(252, 186, 3);
         strokeWeight(5);
-        line(0, 0, 0, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
+
+        line(0, 0, 0, this.upperBound);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
     }
 
@@ -235,11 +239,22 @@ class Blueprint {
         }
     }
 
-    raise() {
-        let constant = this.yVertices[this.yVertices.length-1] - (height-height/4);
+    shrink() {
+        let constant = this.lowerBound/this.yVertices[this.yVertices.length-1];
         for (let i=0; i<this.yVertices.length; i++) {
-            this.yVertices[i] -= constant;
+            this.xVertices[i] *= constant;
+            this.yVertices[i] *= constant;
         }
+    }
+
+    lower() {
+        //console.log("lower");
+        let constant = this.upperBound - this.yVertices[0];
+        //console.log(constant);
+        for (let i=0; i<this.yVertices.length; i++) {
+            this.yVertices[i] += constant;
+        }
+        //console.log(this.yVertices[0]);
     }
 
     generateShields() {
@@ -359,7 +374,6 @@ class Blueprint {
         let maxThrusters = minThrusters + 1;
         if (minThrusters > 2) minThrusters--;
         let thrusterCount = minThrusters + Math.floor( Math.random() * (maxThrusters+1-minThrusters) ); //thrusterCount done
-        console.log(thrusterCount);
         this.thrusterWidth = backLength / thrusterCount;
         this.thrusterWidth *= 0.7;
         measureLine = this.thrusterWidth;
