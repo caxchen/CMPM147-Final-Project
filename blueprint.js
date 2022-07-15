@@ -26,6 +26,7 @@ class Blueprint {
         this.thrusterSpritesheet.get(1134, 0, 567, 1134), this.thrusterSpritesheet.get(1701, 0, 567, 1134)];  //this array doesn't work for some reason.
         this.thrusterFrame = 0;
         this.name = "SV-1 Ares"; //a default name
+        this.typeName = "Private Vessel";
         this.font = loadFont("ERASMD.TTF");
         this.type = 1;  //1 is cruisers
         this.upperBound = height/8;
@@ -53,7 +54,7 @@ class Blueprint {
         //this.generateShields();
         if (this.yVertices[0] < this.upperBound) this.lower();
         if (this.yVertices[this.yVertices.length-1] > height-height/4) this.shrink();
-        this.hullColor = (Math.random()*190) + 50
+        this.hullColor = (Math.random()*180) + 40
         if (this.bodyPattern == "fighter") this.generateCockpit();
         else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
@@ -118,7 +119,9 @@ class Blueprint {
         textSize(40);
         fill(255);
         textFont(this.font);
-        text(this.name, width/30-width/2, height/20);
+        text(this.name, width/30-width/2, height/20);  //name text
+        textSize(25);
+        text(this.typeName, -width/2 + width/30, height/12); //ship type
         stroke(252, 186, 3);
         strokeWeight(5);
 
@@ -157,9 +160,8 @@ class Blueprint {
         let vertexCount = floor(Math.random()*10);
         while (vertexCount < minVertices || vertexCount > maxVertices) vertexCount = floor(Math.random()*10);
 
-
         let noiseSeed1 = Math.random();
-        let noiseSeed2 = Math.random();
+        let noiseSeed2 = Math.random()*10;
         this.xVertices.push(noise(noiseSeed1)*width/5);
         this.yVertices.push(noise(noiseSeed2)*height/3);
         for (let i=0; i<vertexCount; i++) {
@@ -387,14 +389,14 @@ class Blueprint {
     generateName() {
         //constructor was getting a bit crowded.
         this.pre = ["Paan-", "Baan-", "Ven", "Ad", "Tain", "Noor", "Skur", "Ti", "Yi", "Fai", "Om", "Can", "Um", "Kor", "Xor", 
-        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl", "Ala"];
+        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl", "Ala", "Ix"];
         this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
-        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda"];
+        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda", "ix"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
         "Far"];
         this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
-        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore"];
+        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore"]
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
         "Kolkata", "Tianjin", "Taipei", "Ulaanbaatar", "Antanarivo", "Cairo", "Pegasus", "Golem", "Jotun", "Ankara", "Dakar", "Valencia",
         "Daegu", "Resolute", "Hera", "Roskilde", "Tallinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
@@ -406,8 +408,9 @@ class Blueprint {
         "Pulsar", "Quasar", "Nomad", "Firehawk", "Spriggan", "Sparrow", "Ringdancer", "Starskipper", "Beltskipper", "Corsair", "Calico",
         "Wyvern", "Contrail", "Comet", "Hadron"];
         this.cruiserTypes = ["Yacht", "Cargo Ship", "Battleship", "Frigate", "Destroyer", "Dreadnought", "Transport", "Passenger Ship",
-        "Exploration Vessel", "Science Vessel", "Trade Vessel", "Flagship", "Resort Cruiser", "Medical Frigate"];
-        this.cruiserPre = ["USS", "UNN", "ODF", "HMS", "MSC", "UCS", "USC"]
+        "Exploration Vessel", "Science Vessel", "Trade Vessel", "Flagship", "Resort Cruiser", "Medical Frigate", "Cathedral Ship"];
+        this.fighterTypes = ["Fighter", "Personal Transport", "Shuttle", "Corporate Shuttle", "Civilian Shuttle", "Bomber", "Dropship",
+        "Exploration Craft", "Scout Ship"]
         this.name = "";
         // 65 - 90 is capital letters
         // 48 - 57 is numbers
@@ -424,6 +427,7 @@ class Blueprint {
                 this.name += Math.floor(Math.random() * 101) + " ";
                 this.name += this.fighterNoun[Math.floor(Math.random()*this.fighterNoun.length)];
             }
+            this.typeName = this.fighterTypes[Math.floor(Math.random()*this.fighterTypes.length)];
         } else if (this.bodyPattern == "cruiser") {
             let gotRand2 = Math.random();
             this.name += String.fromCharCode(65+Math.floor(Math.random()*26));
@@ -439,6 +443,7 @@ class Blueprint {
                 this.name += this.adj[Math.floor(Math.random()*this.adj.length)] + " ";
                 this.name += this.cruiserNoun[Math.floor(Math.random()*this.cruiserNoun.length)];
             }
+            this.typeName = this.cruiserTypes[Math.floor(Math.random()*this.cruiserTypes.length)];
         }
         //this.name += String.fromCharCode(65+Math.floor(Math.random()*26));
     }
