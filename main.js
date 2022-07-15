@@ -32,7 +32,6 @@ function toggleType() {
     ship.type *= -1;
     ship.generate();
 }
-//document.getElementById.typeChooser.onchange = e => {};
 
 
 let test = 0;

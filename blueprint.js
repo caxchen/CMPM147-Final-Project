@@ -59,7 +59,6 @@ class Blueprint {
         else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
         this.generateName();
-        //console.log(this.yVertices[this.yVertices.length-1], " vs ", height);
     }
     
 
@@ -73,8 +72,7 @@ class Blueprint {
         noStroke();
         let snapshot;
         for (let i=0; i<this.thrusterX.length; i++) {
-            //this.thrusterAnimation[Math.floor(this.thrusterFrame)].resize(this.thrusterWidth, this.thrusterWidth*2);  //don't know why this doesn't work
-            snapshot = this.thrusterSpritesheet.get(this.thrusterFrame*567, 0, 567, 1134);  //this is the workaround for the thrusterAnimation array's mysterious bug
+            snapshot = this.thrusterSpritesheet.get(this.thrusterFrame*567, 0, 567, 1134);
             snapshot.resize(this.thrusterWidth*1.7, this.thrusterWidth*2);
             image(snapshot, this.thrusterX[i]-this.thrusterWidth*0.7/2, this.yVertices[this.yVertices.length-1]+this.thrusterLength-20);
             rect(this.thrusterX[i], this.yVertices[this.yVertices.length-1]-10, this.thrusterWidth, this.thrusterLength);
@@ -86,16 +84,6 @@ class Blueprint {
         } else noStroke()
         //render body
         this.renderSymmetrical(this.xVertices, this.yVertices, this.hullColor);
-        /*fill(this.hullColor);
-        beginShape(); 
-        for (let i=0; i<this.xVertices.length; i++) {
-            vertex(this.xVertices[i], this.yVertices[i]);
-        }
-        for (let j=this.xVertices.length-1; j>=0; j--) {
-            vertex(-this.xVertices[j], this.yVertices[j]);
-        }
-        endShape(CLOSE);*/
-        //asdf
         this.renderInner();
         fill(50, 30, 120);
         noStroke();
@@ -445,7 +433,6 @@ class Blueprint {
             }
             this.typeName = this.cruiserTypes[Math.floor(Math.random()*this.cruiserTypes.length)];
         }
-        //this.name += String.fromCharCode(65+Math.floor(Math.random()*26));
     }
 
 }
