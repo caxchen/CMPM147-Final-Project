@@ -1,6 +1,8 @@
 let ship;
 let stars;
 
+
+
 function setup() {
     frameRate(30);
     createCanvas(800, 800);
@@ -8,6 +10,20 @@ function setup() {
     ship.generate();
     stars = new Starfield();
     //ship.testGenerate();
+
+    //set up html selector "typeChooser"
+    let cruiserOption = document.createElement("option");
+    cruiserOption.value = 1;
+    cruiserOption.innerHTML = "cruiser";
+    typeChooser.appendChild(cruiserOption);
+    let fighterOption = document.createElement("option");
+    fighterOption.value = -1;
+    fighterOption.innerHTML = "fighter";
+    typeChooser.appendChild(fighterOption);
+    typeChooser.onchange = e => {
+        ship.type = typeChooser.value;
+        ship.generate();
+    }
 }
 
 
@@ -16,6 +32,8 @@ function toggleType() {
     ship.type *= -1;
     ship.generate();
 }
+//document.getElementById.typeChooser.onchange = e => {};
+
 
 let test = 0;
 let testrate = 0.01;
