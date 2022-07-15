@@ -42,7 +42,7 @@ function draw() {
     //ship.generate();
     stroke(0, 140, 255);
     //line(0, height-height/8, width, height-height/8);
-    line(0, height-height/4, width, height-height/4);
+    //line(0, height-height/4, width, height-height/4);
     noStroke();
     fill(255);
     ship.render();

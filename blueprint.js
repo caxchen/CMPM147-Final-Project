@@ -113,7 +113,7 @@ class Blueprint {
         stroke(252, 186, 3);
         strokeWeight(5);
 
-        line(0, 0, 0, this.upperBound);
+        //line(0, 0, 0, this.upperBound);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
     }
 
