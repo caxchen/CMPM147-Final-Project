@@ -31,6 +31,10 @@ class Blueprint {
         this.type = 1;  //1 is cruisers
         this.upperBound = height/8;
         this.lowerBound = height-height/4;
+        this.lightsX = [];
+        this.lightsY = [];
+        this.lightsFrame = 0;
+        this.lightsMode;
     }
 
     generate() {
@@ -59,6 +63,8 @@ class Blueprint {
         else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
         this.generateName();
+        if (this.bodyPattern == "cruiser" && Math.random() < 5 && this.hullColor < 165) this.generateLights();
+        else this.lightsCount = 0;
     }
     
 
@@ -113,8 +119,18 @@ class Blueprint {
         stroke(252, 186, 3);
         strokeWeight(5);
 
-        //line(0, 0, 0, this.upperBound);
+        //line(0, this.yVertices[0], 0, this.yVertices[0] + this.lightsSeparationY);
+        //line(0, this.yVertices[0], this.lightsSeparationX, this.yVertices[0]);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
+
+        fill(255, 174, 0);
+        //line(-this.lightsSeparationX, this.bridgeY[0], this.lightsSeparationX, this.bridgeY[0]);
+        noStroke();
+        for (let i=1; i<this.lightsCount; i++) {
+            circle(this.lightsSeparationX, this.yVertices[0] + i*this.lightsSeparationY, 4);
+            circle(-this.lightsSeparationX, this.yVertices[0] + i*this.lightsSeparationY, 4);
+
+        }
     }
 
     renderSymmetrical(xArray, yArray, color) {
@@ -308,9 +324,9 @@ class Blueprint {
 
     generateBridge() {
         //3 patterns
-        //1: 4 vertices.  begins and ends on reflectline
-        //2: 4 vertices.  none on reflectline
-        //3: starting vertex, 3 more vertices to form a quadrangle, ends at starting vertex.  makes 2 symmetrical shapes
+        //1: 4 vertices.  begins and ends on reflectline (chevron pattern)
+        //2: 4 vertices.  none on reflectline  (underwear pattern)
+        //3: starting vertex, 3 more vertices to form a quadrangle, ends at starting vertex.  makes 2 symmetrical shapes (strip pattern)
         let gotRand = Math.random();
         this.bridgeX = [];
         this.bridgeY = [];
@@ -433,6 +449,19 @@ class Blueprint {
             }
             this.typeName = this.cruiserTypes[Math.floor(Math.random()*this.cruiserTypes.length)];
         }
+    }
+
+
+    generateLights() {
+        this.lightsSeparationX = width/60;
+        this.lightsSeparationY = height/35;
+        this.lightsCount = Math.floor((this.bridgeY[0] - this.yVertices[0])/this.lightsSeparationY);
+        /*console.log(lightsCount);
+        for (let i=1; i<lightsCount; i++) {
+            this.lightsY[i] = this.yVertices[0] + i*this.lightsSeparationY;
+        }
+        console.log(this.lightsY);*/
+        
     }
 
 }

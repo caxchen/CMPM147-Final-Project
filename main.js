@@ -28,10 +28,10 @@ function setup() {
 
 
 function shipGenerate() { ship.generate(); }
-function toggleType() {
+/*function toggleType() {
     ship.type *= -1;
     ship.generate();
-}
+}*/
 
 
 let test = 0;
