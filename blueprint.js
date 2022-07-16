@@ -123,7 +123,15 @@ class Blueprint {
         //line(0, this.yVertices[0], this.lightsSeparationX, this.yVertices[0]);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
 
-        fill(255, 174, 0);
+        this.lightsFrame++;
+        if (this.lightsFrame > 60) this.lightsFrame = 0;
+        if (this.lightsMode) {
+            if (this.lightsFrame == 45) fill(255, 174, 0);
+            else if (this.lightsFrame == 53) fill(255, 174, 0);
+            else fill(this.hullColor);
+            console.log(this.lightsMode);
+        }
+        //fill(255, 174, 0);
         //line(-this.lightsSeparationX, this.bridgeY[0], this.lightsSeparationX, this.bridgeY[0]);
         noStroke();
         for (let i=1; i<this.lightsCount; i++) {
@@ -461,7 +469,9 @@ class Blueprint {
             this.lightsY[i] = this.yVertices[0] + i*this.lightsSeparationY;
         }
         console.log(this.lightsY);*/
-        
+        this.lightsFrame = 0;
+        if (Math.random() < 0.5) this.lightsMode = 1;
+        else this.lightsMode = 2;
     }
 
 }
