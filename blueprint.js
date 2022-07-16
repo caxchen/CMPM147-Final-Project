@@ -35,6 +35,7 @@ class Blueprint {
         this.lightsY = [];
         this.lightsFrame = 0;
         this.lightsMode;
+        this.hasLights = false;
     }
 
     generate() {
@@ -63,8 +64,8 @@ class Blueprint {
         else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
         this.generateName();
-        if (this.bodyPattern == "cruiser" && Math.random() < 5 && this.hullColor < 165) this.generateLights();
-        else this.lightsCount = 0;
+        if (Math.random() < 0.65 && this.hullColor < 120) this.generateLights();
+        else this.hasLights = false;
     }
     
 
@@ -123,21 +124,29 @@ class Blueprint {
         //line(0, this.yVertices[0], this.lightsSeparationX, this.yVertices[0]);
         //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
 
-        this.lightsFrame++;
-        if (this.lightsFrame > 60) this.lightsFrame = 0;
-        if (this.lightsMode) {
-            if (this.lightsFrame == 45) fill(255, 174, 0);
-            else if (this.lightsFrame == 53) fill(255, 174, 0);
+        //rendering lights
+        if (this.hasLights) {
+            this.lightsFrame++;
+            if (this.lightsFrame > 70) this.lightsFrame = 0;
+            if (this.lightsFrame == 45) fill(this.lightsColor[0], this.lightsColor[1], this.lightsColor[2]);
+            else if (this.lightsFrame == 53) fill(this.lightsColor[0], this.lightsColor[1], this.lightsColor[2]);
             else fill(this.hullColor);
-            console.log(this.lightsMode);
-        }
-        //fill(255, 174, 0);
-        //line(-this.lightsSeparationX, this.bridgeY[0], this.lightsSeparationX, this.bridgeY[0]);
-        noStroke();
-        for (let i=1; i<this.lightsCount; i++) {
-            circle(this.lightsSeparationX, this.yVertices[0] + i*this.lightsSeparationY, 4);
-            circle(-this.lightsSeparationX, this.yVertices[0] + i*this.lightsSeparationY, 4);
+            //fill(255, 174, 0);
+            //line(-this.lightsSeparationX, this.bridgeY[0], this.lightsSeparationX, this.bridgeY[0]);
+            noStroke();
+            let lightsSize = 4;
+            if (this.bodyPattern == "cruiser") {
+                for (let i=1; i<this.lightsCount; i++) {
+                circle(this.lightsSeparationX, this.yVertices[0] + i*this.lightsSeparationY, 4);
+                circle(-this.lightsSeparationX, this.yVertices[0] + i*this.lightsSeparationY, 4);
+                }
+            } else if (this.bodyPattern == "fighter") {
+                circle(this.fighterLightsX[0], this.fighterLightsY[0], lightsSize);
+                circle(-this.fighterLightsX[0], this.fighterLightsY[0], lightsSize);
+                circle(this.fighterLightsX[1], this.fighterLightsY[1], lightsSize);
+                circle(-this.fighterLightsX[1], this.fighterLightsY[1], lightsSize);
 
+            }
         }
     }
 
@@ -461,17 +470,30 @@ class Blueprint {
 
 
     generateLights() {
+        this.hasLights = true;
         this.lightsSeparationX = width/60;
         this.lightsSeparationY = height/35;
-        this.lightsCount = Math.floor((this.bridgeY[0] - this.yVertices[0])/this.lightsSeparationY);
-        /*console.log(lightsCount);
-        for (let i=1; i<lightsCount; i++) {
-            this.lightsY[i] = this.yVertices[0] + i*this.lightsSeparationY;
-        }
-        console.log(this.lightsY);*/
+        if (this.bodyPattern == "cruiser") this.lightsCount = Math.floor((this.bridgeY[0] - this.yVertices[0])/this.lightsSeparationY);
+        else {
+            let edge;
+            if (this.yVertices[1]-this.yVertices[0] > this.yVertices[2]-this.yVertices[1]) edge = 0;
+            else edge = 1;
+            let yAdd = (this.yVertices[this.yVertices.length-1] - this.yVertices[0]) / 25;
+            this.fighterLightsX = [];
+            this.fighterLightsX.push(this.xVertices[edge + 0] * 0.7);
+            this.fighterLightsY = [];
+            this.fighterLightsY.push(this.yVertices[edge + 0] + yAdd);
+            this.fighterLightsX.push(this.xVertices[edge + 1] * 0.7);
+            this.fighterLightsY.push(this.yVertices[edge + 1] + yAdd);
+        };
+        
+        let gotRand = Math.random();
+        if (gotRand < 0.2) this.lightsColor = [255,255,255]; //white
+        else if (gotRand < 0.4) this.lightsColor = [255, 174, 0]; //orange
+        else if (gotRand < 0.6) this.lightsColor = [255, 98, 66];  //red
+        else if (gotRand < 0.8) this.lightsColor = [61, 255, 13]; //green
+        else this.lightsColor = [51, 99, 255]; //blue
         this.lightsFrame = 0;
-        if (Math.random() < 0.5) this.lightsMode = 1;
-        else this.lightsMode = 2;
     }
 
 }
