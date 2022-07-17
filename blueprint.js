@@ -417,12 +417,12 @@ class Blueprint {
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
         "Far"];
         this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
-        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore"]
+        "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore", "Hand"]
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
         "Kolkata", "Tianjin", "Taipei", "Ulaanbaatar", "Antanarivo", "Cairo", "Pegasus", "Golem", "Jotun", "Ankara", "Dakar", "Valencia",
         "Daegu", "Resolute", "Hera", "Roskilde", "Tallinn", "Helsinki", "Vilnius", "Medina", "Algiers", "Caen", "Montpellier", "Groz", 
         "Malta", "Khartoum", "Nairobi", "Lisbon", "Königsberg", "Atlanta", "Mom's Spaghetti", "Quito", "Raphael", "Abaddon",
-        "Ezekiel", "Saint Augustine", "Bonaventure", "Caleston", "Canterbury", "Ravenna", "Mercantilist", "Blackbeard"];
+        "Ezekiel", "Saint Augustine", "Bonaventure", "Caleston", "Canterbury", "Ravenna", "Mercantilist", "Blackbeard", "Resolute"];
         //Note: US Navy Cruisers are named after cities
         this.fighterNoun = ["Basilisk", "Archer", "Antares", "Magi", "Marauder", "Outlander", "Farsight", "Owl", "Eagle", "Salamander",
         "Goblin", "Lamp", "Galliot", "Dragonfly", "Locust", "Mantis", "Cicada", "Castella", "Ghost", "Phantom", "Aurora", "Vortex",
