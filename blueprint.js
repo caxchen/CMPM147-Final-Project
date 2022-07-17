@@ -59,12 +59,12 @@ class Blueprint {
         //this.generateShields();
         if (this.yVertices[0] < this.upperBound) this.lower();
         if (this.yVertices[this.yVertices.length-1] > height-height/4) this.shrink();
-        this.hullColor = (Math.random()*180) + 40
+        this.hullColor = (Math.random()*190) + 20
         if (this.bodyPattern == "fighter") this.generateCockpit();
         else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
         this.generateName();
-        if (Math.random() < 0.65 && this.hullColor < 120) this.generateLights();
+        if (Math.random() < 0.7 && this.hullColor < 120) this.generateLights();
         else this.hasLights = false;
     }
     
@@ -488,11 +488,11 @@ class Blueprint {
         };
         
         let gotRand = Math.random();
-        if (gotRand < 0.2) this.lightsColor = [255,255,255]; //white
-        else if (gotRand < 0.4) this.lightsColor = [255, 174, 0]; //orange
-        else if (gotRand < 0.6) this.lightsColor = [255, 98, 66];  //red
-        else if (gotRand < 0.8) this.lightsColor = [61, 255, 13]; //green
-        else this.lightsColor = [51, 99, 255]; //blue
+        if (gotRand < 0.25) this.lightsColor = [255,255,255]; //white
+        else if (gotRand < 0.5) this.lightsColor = [255, 174, 0]; //orange
+        else if (gotRand < 0.75) this.lightsColor = [255, 98, 66];  //red
+        else if (gotRand < 1) this.lightsColor = [61, 255, 13]; //green
+        //else this.lightsColor = [51, 99, 255]; //blue
         this.lightsFrame = 0;
     }
 
