@@ -76,8 +76,7 @@ class Blueprint {
         //render thrusters first so it's below the main body
         this.thrusterFrame += 1;
         if (this.thrusterFrame >= this.thrusterAnimation.length) this.thrusterFrame = 0;
-        fill(this.hullColor-20);
-        if (this.hullColur <=40) fill(this.hullColor - 10);
+        fill(this.hullColor*0.7);
         noStroke();
         let snapshot;
         for (let i=0; i<this.thrusterX.length; i++) {
@@ -412,12 +411,19 @@ class Blueprint {
     generateName() {
         //constructor was getting a bit crowded.
         this.pre = ["Paan-", "Baan-", "Ven", "Ad", "Tain", "Noor", "Skur", "Ti", "Yi", "Fai", "Om", "Can", "Um", "Kor", "Xor", 
-        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl", "Ala", "Ix"];
+        "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl", "Ala", "Ix", "Him",
+        "Win", "Van", "Tor", "Lon", "San", "Ed", "Goth", "Sto", "Hel", "Vil", "Val", "Am", "Uel", "Mun", "Witt", "Nord", "Ryll", "Skyv", 
+        "Niko", "Thys", "Vend", "Brond", "Vell", "Ska", "Fal", "Ron", "Skron", "Hem", "Lin", "Stan", "Tan", "Sod", "Mar", "Up", "Gav", 
+        "Mor", "Sal", "Sol", "Kau", "Jak", "In", "Al", "Lak", "Tanna", "Gir", "Mos", "Saf", "Wan", "Oam", "Kai"];
         this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
-        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda", "ix"];
+        "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda", "ix", "eiji", "lin", "var", 
+        "heim", "helm", "havn", "hafen", "is", "ier", "bur", "ien", "ona", "anca", "aga", "on", "una", "gona", "udia", "sari", "hero",
+        "urse", "cchio", "les", "zaro", "sina", "sala", "eb", "je", "ich", "ern", "ioux", "eux", "eans", "hoven", "olle", "burg", "wick",
+        "zig", "stadt", "ling", "ingen", "gart", "dorf", "alze", "munde", "foss", "inne", "hamar", "ovka", "uka", "izhka", "more", "orsk",
+        "myr", "laiv", "at", "ul", "ton", "anga", "nui", "aka", "koura", "gill"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
-        "Far", "Funky Fresh"];
+        "Far", "Funky Fresh", "Queen's"];
         this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
         "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore", "Hand"]
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
