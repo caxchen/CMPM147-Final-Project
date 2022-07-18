@@ -41,8 +41,6 @@ class Blueprint {
     generate() {
         this.xVertices = [];
         this.yVertices = [];
-        //let randomBody = Math.random();
-        //randomBody = 0.6;
         if (this.type == -1) {
             console.log("generating fighter");
             this.generateBody(3, 5, 10); //fighter pattern
@@ -66,7 +64,6 @@ class Blueprint {
         this.generateName();
         if (Math.random() < 0.7 && this.hullColor < 120) this.generateLights();
         else this.hasLights = false;
-        console.log(this.hullColor);
     }
     
 
@@ -121,10 +118,6 @@ class Blueprint {
         stroke(252, 186, 3);
         strokeWeight(5);
 
-        //line(0, this.yVertices[0], 0, this.yVertices[0] + this.lightsSeparationY);
-        //line(0, this.yVertices[0], this.lightsSeparationX, this.yVertices[0]);
-        //console.log(width/2, 0, width/2, (this.yVertices[this.yVertices.length-1]-this.yVertices[0])/6);
-
         //rendering lights
         if (this.hasLights) {
             this.lightsFrame++;
@@ -132,8 +125,6 @@ class Blueprint {
             if (this.lightsFrame == 45) fill(this.lightsColor[0], this.lightsColor[1], this.lightsColor[2]);
             else if (this.lightsFrame == 53) fill(this.lightsColor[0], this.lightsColor[1], this.lightsColor[2]);
             else fill(this.hullColor);
-            //fill(255, 174, 0);
-            //line(-this.lightsSeparationX, this.bridgeY[0], this.lightsSeparationX, this.bridgeY[0]);
             noStroke();
             let lightsSize = 4;
             if (this.bodyPattern == "cruiser") {
@@ -217,7 +208,6 @@ class Blueprint {
                     changedSomething = true;
                 }
             }
-            //console.log("in for loop iteration ", timeOut, ":  ", this.xVertices);
             timeOut++;
             if (timeOut > 200) throw "timeout";
         }
@@ -272,13 +262,10 @@ class Blueprint {
     }
 
     lower() {
-        //console.log("lower");
         let constant = this.upperBound - this.yVertices[0];
-        //console.log(constant);
         for (let i=0; i<this.yVertices.length; i++) {
             this.yVertices[i] += constant;
         }
-        //console.log(this.yVertices[0]);
     }
 
     generateShields() {
@@ -353,7 +340,6 @@ class Blueprint {
         let start = this.yVertices[2];
         this.bridgeX.push(0); //0
         this.bridgeY.push(start);
-        //gotRand = 0.7;
         if (gotRand < 0.33) { //case 1
             this.bridgeX.push(maxX/2 + Math.random()*maxX/2);
             this.bridgeY.push(start + Math.random()*maxLength);
