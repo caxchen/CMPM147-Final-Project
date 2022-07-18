@@ -43,7 +43,7 @@ class Blueprint {
         this.yVertices = [];
         if (this.type == -1) {
             console.log("generating fighter");
-            this.generateBody(3, 5, 10); //fighter pattern
+            this.generateBody(4, 6, 10); //fighter pattern
             this.bodyPattern = "fighter";
         }
         else if (this.type == 1) {
