@@ -59,23 +59,25 @@ class Blueprint {
         //this.generateShields();
         if (this.yVertices[0] < this.upperBound) this.lower();
         if (this.yVertices[this.yVertices.length-1] > height-height/4) this.shrink();
-        this.hullColor = (Math.random()*190) + 20
+        this.hullColor = (Math.random()*180) + 20
         if (this.bodyPattern == "fighter") this.generateCockpit();
         else if (this.bodyPattern == "cruiser") this.generateBridge();
         this.generateThrusters();
         this.generateName();
         if (Math.random() < 0.7 && this.hullColor < 120) this.generateLights();
         else this.hasLights = false;
+        console.log(this.hullColor);
     }
     
 
     render() {
-
+        
         translate(width/2, 0);
         //render thrusters first so it's below the main body
         this.thrusterFrame += 1;
         if (this.thrusterFrame >= this.thrusterAnimation.length) this.thrusterFrame = 0;
         fill(this.hullColor-20);
+        if (this.hullColur <=40) fill(this.hullColor - 10);
         noStroke();
         let snapshot;
         for (let i=0; i<this.thrusterX.length; i++) {
@@ -415,7 +417,7 @@ class Blueprint {
         "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda", "ix"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
-        "Far"];
+        "Far", "Funky Fresh"];
         this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
         "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore", "Hand"]
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
@@ -427,7 +429,7 @@ class Blueprint {
         this.fighterNoun = ["Basilisk", "Archer", "Antares", "Magi", "Marauder", "Outlander", "Farsight", "Owl", "Eagle", "Salamander",
         "Goblin", "Lamp", "Galliot", "Dragonfly", "Locust", "Mantis", "Cicada", "Castella", "Ghost", "Phantom", "Aurora", "Vortex",
         "Pulsar", "Quasar", "Nomad", "Firehawk", "Spriggan", "Sparrow", "Ringdancer", "Starskipper", "Beltskipper", "Corsair", "Calico",
-        "Wyvern", "Contrail", "Comet", "Hadron"];
+        "Wyvern", "Contrail", "Comet", "Hadron", "Griffin"];
         this.cruiserTypes = ["Yacht", "Cargo Ship", "Battleship", "Frigate", "Destroyer", "Dreadnought", "Transport", "Passenger Ship",
         "Exploration Vessel", "Science Vessel", "Trade Vessel", "Flagship", "Resort Cruiser", "Medical Frigate", "Cathedral Ship"];
         this.fighterTypes = ["Fighter", "Personal Transport", "Shuttle", "Corporate Shuttle", "Civilian Shuttle", "Bomber", "Dropship",
