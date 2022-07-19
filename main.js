@@ -1,6 +1,8 @@
 let ship;
 let stars;
-
+let showcaseSwitch = false;
+let showcaseCounter = 100;
+let typeChosen = 1;
 
 
 function setup() {
@@ -22,16 +24,31 @@ function setup() {
     typeChooser.appendChild(fighterOption);
     typeChooser.onchange = e => {
         ship.type = typeChooser.value;
+        typeChosen = typeChooser.value;
         ship.generate();
     }
+
+    //set up html selector "showcaseChooser"
+    let offOption = document.createElement("option");
+    offOption.value = 0;  //true and false was causing the value to be the string "true" and "false" instead of booleans
+    offOption.innerHTML = "off";
+    showcaseChooser.appendChild(offOption);
+    let onOption = document.createElement("option");
+    onOption.value = 1; 
+    onOption.innerHTML = "on";
+    showcaseChooser.appendChild(onOption);
+    showcaseChooser.onchange = e => {
+        showcaseSwitch = showcaseChooser.value;
+        if (showcaseSwitch == false) ship.type = typeChosen;
+    }
+
 }
 
 
-function shipGenerate() { ship.generate(); }
-/*function toggleType() {
-    ship.type *= -1;
-    ship.generate();
-}*/
+function shipGenerate() { 
+    ship.generate(); 
+    console.log(typeChosen, " vs ", ship.type);
+}
 
 
 let test = 0;
@@ -39,14 +56,31 @@ let testrate = 0.01;
 function draw() {
     background(0);
     stars.render();
-    //ship.generate();
-    stroke(0, 140, 255);
+    showcaseUpdate();
+
+
+    //stroke(0, 140, 255);
     //line(0, height-height/8, width, height-height/8);
     //line(0, height-height/4, width, height-height/4);
     noStroke();
     fill(255);
     ship.render();
 
+}
+
+
+function showcaseUpdate() {
+    if (showcaseSwitch ==  1) {
+
+        showcaseCounter++;
+        if (showcaseCounter >= 120) {
+            showcaseCounter = 0;
+            if (Math.random() < 0.5) ship.type = -1;
+            else ship.type = 1;
+            ship.generate();
+        }
+
+    }
 }
 
 
