@@ -64,7 +64,7 @@ class Blueprint {
         this.generateName();
         if (Math.random() < 0.7 && this.hullColor < 120) this.generateLights();
         else this.hasLights = false;
-        console.log(this.xVertices[0]);
+        //console.log(this.xVertices[0]);
     }
     
 
