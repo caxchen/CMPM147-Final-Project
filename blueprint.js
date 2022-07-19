@@ -174,8 +174,8 @@ class Blueprint {
         let vertexCount = floor(Math.random()*10);
         while (vertexCount < minVertices || vertexCount > maxVertices) vertexCount = floor(Math.random()*10);
 
-        let noiseSeed1 = Math.random();
-        let noiseSeed2 = Math.random()*10;
+        let noiseSeed1 = Math.random()*100;
+        let noiseSeed2 = Math.random()*100;
         this.xVertices.push(noise(noiseSeed1)*width/5);
         this.yVertices.push(noise(noiseSeed2)*height/3);
         for (let i=0; i<vertexCount; i++) {
