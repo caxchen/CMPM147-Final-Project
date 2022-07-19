@@ -43,7 +43,7 @@ class Blueprint {
         this.yVertices = [];
         if (this.type == -1) {
             console.log("generating fighter");
-            this.generateBody(4, 6, 10); //fighter pattern
+            this.generateBody(3, 6, 2); //fighter pattern
             this.bodyPattern = "fighter";
         }
         else if (this.type == 1) {
@@ -64,6 +64,7 @@ class Blueprint {
         this.generateName();
         if (Math.random() < 0.7 && this.hullColor < 120) this.generateLights();
         else this.hasLights = false;
+        console.log(this.xVertices[0]);
     }
     
 
@@ -409,7 +410,7 @@ class Blueprint {
         "myr", "laiv", "at", "ul", "ton", "anga", "nui", "aka", "koura", "gill"];
         this.adj = ["Vain", "Formless", "Twisted", "Crystal", "Red", "Grey", "White", "Black", "Adamantian", "Obsidian", "Iron", "Steel",
         "Night", "Solar", "Dark", "Burning", "Sex", "Holy", "Fane", "Auroran", "Polar", "Heavenly", "Lonely", "Arctic", "Mystic", "Distant",
-        "Far", "Funky Fresh", "Queen's"];
+        "Far", "Funky Fresh", "Queen's", "Great"];
         this.cruiserNoun = ["Pegasus", "Ghost", "Blade", "Sword", "Spear", "Valkyrie", "Void", "Serpent", "Dragon", "Fire", "Flame", "Wind", 
         "Spirit", "Vision", "Star", "Sun", "Aurora", "Vortex", "Pulsar", "Quasar", "Aquila", "Vale", "Veil", "Garden", "Shore", "Hand"]
         this.nounSingle = ["Tyrfing", "Hela", "Hades", "Loki", "Zeus", "Surtr", "York", "Mandalay", "Jakarta", "Bengaluru", "Acapulco", "Colombo", 
@@ -421,7 +422,7 @@ class Blueprint {
         this.fighterNoun = ["Basilisk", "Archer", "Antares", "Magi", "Marauder", "Outlander", "Farsight", "Owl", "Eagle", "Salamander",
         "Goblin", "Lamp", "Galliot", "Dragonfly", "Locust", "Mantis", "Cicada", "Castella", "Ghost", "Phantom", "Aurora", "Vortex",
         "Pulsar", "Quasar", "Nomad", "Firehawk", "Spriggan", "Sparrow", "Ringdancer", "Starskipper", "Beltskipper", "Corsair", "Calico",
-        "Wyvern", "Contrail", "Comet", "Hadron", "Griffin"];
+        "Wyvern", "Contrail", "Comet", "Hadron", "Griffin", "Hammerhead"];
         this.cruiserTypes = ["Yacht", "Cargo Ship", "Battleship", "Frigate", "Destroyer", "Dreadnought", "Transport", "Passenger Ship",
         "Exploration Vessel", "Science Vessel", "Trade Vessel", "Flagship", "Resort Cruiser", "Medical Frigate", "Cathedral Ship"];
         this.fighterTypes = ["Fighter", "Personal Transport", "Shuttle", "Corporate Shuttle", "Civilian Shuttle", "Bomber", "Dropship",
