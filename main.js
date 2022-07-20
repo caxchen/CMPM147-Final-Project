@@ -73,7 +73,7 @@ function showcaseUpdate() {
     if (showcaseSwitch ==  1) {
 
         showcaseCounter++;
-        if (showcaseCounter >= 120) {
+        if (showcaseCounter >= 150) {
             showcaseCounter = 0;
             if (Math.random() < 0.5) ship.type = -1;
             else ship.type = 1;
