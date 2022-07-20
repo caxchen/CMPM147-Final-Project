@@ -401,7 +401,7 @@ class Blueprint {
         "deez", "Scai", "E", "Zel", "Dir", "Rav", "Ste", "Este", "Ele", "Ala", "Shi", "Deez ", "Hai", "Gai", "Syl", "Ala", "Ix", "Him",
         "Win", "Van", "Tor", "Lon", "San", "Ed", "Goth", "Sto", "Hel", "Vil", "Val", "Am", "Uel", "Mun", "Witt", "Nord", "Ryll", "Skyv", 
         "Niko", "Thys", "Vend", "Brond", "Vell", "Ska", "Fal", "Ron", "Skron", "Hem", "Lin", "Stan", "Tan", "Sod", "Mar", "Up", "Gav", 
-        "Mor", "Sal", "Sol", "Kau", "Jak", "In", "Al", "Lak", "Tanna", "Gir", "Mos", "Saf", "Wan", "Oam", "Kai"];
+        "Mor", "Sal", "Sol", "Kau", "Jak", "In", "Al", "Lak", "Tanna", "Gir", "Mos", "Saf", "Wan", "Oam", "Kai", "Gung"];
         this.post = ["fera", "el", "an", "chak", "urz", "min", "kren", "shi", "delar", "mun", "ana", "venna", "telios", "elia", "a", "nuts",
         "sandor", "krisk", "vos", "karzan", "enia", "ia", "o", "mor", "isk", "Nuts", "cho", "faen", "gadda", "ix", "eiji", "lin", "var", 
         "heim", "helm", "havn", "hafen", "is", "ier", "bur", "ien", "ona", "anca", "aga", "on", "una", "gona", "udia", "sari", "hero",
