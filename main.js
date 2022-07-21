@@ -47,7 +47,6 @@ function setup() {
 
 function shipGenerate() { 
     ship.generate(); 
-    console.log(typeChosen, " vs ", ship.type);
 }
 
 
